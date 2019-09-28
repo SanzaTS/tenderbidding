@@ -4,7 +4,6 @@ include("connection.php");
 
 $username = $_SESSION['username'];
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +36,7 @@ $username = $_SESSION['username'];
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminReports.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -61,7 +60,7 @@ $username = $_SESSION['username'];
       <div class="sidebar-heading">
        Admin Dashboard
       </div>
-          <!-- Divider -->
+          <!-- Divider --> 
       <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -89,10 +88,10 @@ $username = $_SESSION['username'];
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">View and Generate Reports:</h6>
-            <a class="collapse-item" href="adminReports.php">Admin Reports</a>
+          <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
             <a class="collapse-item" href="users.php">View Users</a>
-            <a class="collapse-item" href="stats.php">View Status</a>
+            <a class="collapse-item" href="bidstats.php">View Status</a>
             <a class="collapse-item" href="adminMsg.php">View Notifications</a>
           </div>
         </div>
@@ -169,30 +168,25 @@ $username = $_SESSION['username'];
         </nav>
         <!-- End of Topbar -->
 
-  <!-- Begin Page Content -->
-  <div class="container-fluid">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">View Bids</h1>
+            
+          </div>
+
+          <!-- Content Row -->
+         
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
- 
-</div>
-
-
-
- 
-<!-- Content Row -->
-
-<div class="row">
-
-  <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Reports</h1>
-
+<p class="mb-4">Views all user who bidded</p>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Status Reports</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Bid per Tender Reports</h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -203,11 +197,9 @@ $username = $_SESSION['username'];
             <th>Name</th>
             <th>Surname</th>
             <th>Company</th>
-            <th>bid_date</th>
             <th>Amount</th>
-            
-
-
+            <th>bid_date</th>
+           
             
             
           </tr>
@@ -215,10 +207,12 @@ $username = $_SESSION['username'];
         
         <tbody>
         <?php
-              $tender = $_GET['id'];
+             
+               $id =$_GET['id'];
 
-
-            $table = "SELECT u.name,u.surname,u.company,b.amount,b.bid_date FROM bidder u,bidding b WHERE u.id = b.bidder_id AND b.tender_no = '$tender' ";
+              $table = "SELECT u.name,u.surname,u.company,b.amount,b.bid_date FROM bidder u,bidding b 
+              WHERE b.bidder_id = u.id
+               AND b.tender_no = '$id'";
                 
 
               
@@ -231,22 +225,18 @@ $username = $_SESSION['username'];
                 $surname = $row['surname'];
                 $company = $row['company'];
                 $amount = $row['amount'];
-                $bid_date = $row['bid_date'];
-
-                
+                $date = $row['bid_date'];
+               
               
 
          ?>
           <tr>
-            <td><?php echo $tender; ?></td>
+            <td><?php echo $id; ?></td>
             <td><?php echo $name; ?></td>
             <td><?php echo $surname; ?></td>
             <td><?php echo $company; ?></td>
             <td><?php echo $amount; ?></td>
-            <td><?php echo $bid_date; ?></td>
-           
-            
-           
+            <td><?php echo $date; ?></td>
            
             
           </tr>
@@ -257,34 +247,18 @@ $username = $_SESSION['username'];
           
           
         </tbody>
-        
       </table>
-      <?php 
-        $highest = "SELECT u.name,u.surname,MAX(b.amount) as Money FROM bidder u,bidding b WHERE u.id = b.bidder_id AND b.tender_no = '$tender' ";
-         $query = mysqli_query($con,$highest);
-
-         while($fetch = mysqli_fetch_array($query))
-         {
-             $name = $fetch['name'];
-             $surname = $fetch['surname'];
-             $amount = $fetch['Money'];
-         }
-
-      ?>
-      <p><?php  echo $name." ".$surname."  is currently the Highest bidder with amount of ".$amount; ?></p>
-      <td><button type="submit" class="btn btn-success"  ><a href="adminReports.php"> Back to reports</a></button></td>
+      <a style="margin-left:250;" href="tenders.php">Back to Tenders<a>
     </div>
   </div>
 </div>
 
- 
 
+             
+           
 
-</div>
-
-</div>
-<!-- /.container-fluid -->
-
+        </div>
+        <!-- /.container-fluid -->
 
       </div>
       <!-- End of Main Content -->

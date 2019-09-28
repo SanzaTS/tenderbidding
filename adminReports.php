@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
@@ -286,7 +286,7 @@ if(isset($_POST['pdf']))
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="adminReports.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -330,7 +330,7 @@ if(isset($_POST['pdf']))
             <a class="collapse-item" href="tenders.php">View Tenders</a>
             <a class="collapse-item" href="users.php">View Users</a>
             <a class="collapse-item" href="stats.php">View Status</a>
-            <a class="collapse-item" href="#">View Notifications</a>
+            <a class="collapse-item" href="adminMsg.php">View Notifications</a>
           </div>
         </div>
       </li>     
@@ -808,7 +808,7 @@ if(isset($_POST['pdf']))
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

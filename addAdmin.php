@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
@@ -8,31 +8,119 @@ $error = " ";
 if(isset($_POST['save']))
 {
 
-  $username = $_POST['username'];
+  $sysname = $_POST['username'];
   $name = $_POST['name'];
   $surname =$_POST['username'];
   $id_num = $_POST['id'];
   $phone = $_POST['phone'];
   $email = $_POST['email'];
-
+  
+    $error = "";
   $date = date("Y-m-d");
 
-   $sql = "INSERT INTO users(username,password,role,createdAt,Active) VALUES('$username','password','Admin ','$date','offline'";
-   if(mysqli_query($con,$sql))
-   {
-     $id = mysqli_insert_id($con);
+      // echo $sysname." ".$name."   ".$surname."  ".$id_num."  ".$phone."  ".$email;
+      if(!empty($sysname)||!empty($name)|| !empty($surname) || !empty($id_num) || !empty($email) || !empty($phone))
+      {
+          if(preg_match("/^[a-zA-Z][0-9a-zA-Z_!$@#^&]{5,20}$/", $sysname))
+          {
+              if(strlen($name) >= 3 )
+              { 
+                 if(strlen($surname))
+                 {
+                    if(strlen($id_num) == 13)
+                    {
+                       if(is_numeric($id_num))
+                       {
+                          if(strlen($phone) == 10)
+                          { 
+                             if(filter_var($email, FILTER_VALIDATE_EMAIL))
+                             {
+                                  $ckUser = "SELECT * FROM users WHERE username = '$sysname'";
+                                  $res1 = mysqli_query($con,$ckUser);
+                                  $row = mysqli_num_rows($res1);
+                                  if($row == 0)
+                                  {
+                                      $ckId = "SELECT * FROM admin WHERE id_num = $id_num AND email = '$email'";
+                                      $res2 = mysqli_query($con,$ckId);
+                                      $row1 = mysqli_num_rows($res2);
 
-     $sql2 = "INSERT INTO admin(name,surname,id_num,email,contact_no,user_id) VALUE('$name','$surname','$id_num','$email','$phone',$id)";
+                                      if($row == 0)
+                                      {
+                                            $sql = "INSERT INTO `users`(`username`, `password`, `role`, `createdAt`, `Active`) VALUES('$sysname','password','Admin','$date','offline')";
+                                            if(mysqli_query($con,$sql) or die(mysqli_error($con)))
+                                            {
+                                              $id = mysqli_insert_id($con);
+                                        
+                                              $sql2 = "INSERT INTO admin(name,surname,id_num,email,contact_no,user_id) VALUE('$name','$surname','$id_num','$email','$phone',$id)";
+                                        
+                                              if(mysqli_query($con,$sql2))
+                                              {
+                                                $error = "Successfull inserted";
+                                              }
+                                        
+                                              else{
+                                                $error = "Something went wrong durring the insertion";
+                                              }
+                                            }
+                                            else{
+                                              $error ="Something went wrong durring the insertion";
+                                            }
+                                     
+                                      }
+                                      else
+                                      {
+                                        $error = "Make sure you email and Id do not exists";
+                                      }
 
-     if(mysqli_query($con,$sql2))
-     {
-       $error = "Successfull inserted";
-     }
 
-     else{
-       $error = "Something went wrong durring the insertion";
-     }
-   }
+                                  }
+                                  else
+                                  {
+                                    $error = "Username Already Exists";
+                                  }
+                             }
+                             else
+                             {
+                               $error = "Email is not valid";
+                             }
+
+                          }
+                          else
+                          {
+                            $error = "Phone number must be 10 digits";
+                          }
+                       }
+                       else
+                       {
+                         $error="ID Number must be digits";
+                       }
+                    }
+                    else
+                    {
+                      $error = "Id must be exact 13 digit ";
+                    }
+                 }
+                 else
+                 {
+                   $error = "Surname must be atlest 3 charecters ";
+                 }
+
+              }
+              else
+              {
+                $error = "Name must be atleast 3 charecters";
+              }
+          }
+          else
+          {
+            $error ="Username must start with a charecter <br> It must be between 5 to 20 charecters";
+          }
+
+      }
+      else
+      {
+         $error = "All fields must be filled";
+      }
 
 
   }
@@ -81,7 +169,7 @@ if(isset($_POST['save']))
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="adminReports.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -121,10 +209,11 @@ if(isset($_POST['save']))
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">View and Generate Reports:</h6>
+            <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
-            <a class="collapse-item" href="#">View Users</a>
-            <a class="collapse-item" href="#">View Status</a>
-            <a class="collapse-item" href="#">View Notifications</a>
+            <a class="collapse-item" href="users.php">View Users</a>
+            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="adminMsg.php">View Notifications</a>
           </div>
         </div>
       </li>
@@ -295,7 +384,7 @@ if(isset($_POST['save']))
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

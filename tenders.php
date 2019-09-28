@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
@@ -48,7 +48,7 @@ $username = $_SESSION['username'];
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="adminReports.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -60,7 +60,7 @@ $username = $_SESSION['username'];
       <div class="sidebar-heading">
        Admin Dashboard
       </div>
-          <!-- Divider -->
+          <!-- Divider --> 
       <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -91,9 +91,8 @@ $username = $_SESSION['username'];
             <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
             <a class="collapse-item" href="users.php">View Users</a>
-            <a class="collapse-item" href="stats.php">View Status</a>
-            <a class="collapse-item" href="#">View Notifications</a>
-          </div>
+            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="adminMsg.php">View Notifications</a>
         </div>
       </li>
  
@@ -217,6 +216,7 @@ $username = $_SESSION['username'];
         <div class="dropdown-header">Actions:</div>
         <a class="dropdown-item" href="tenderedit.php?id=<?php echo $id;?>">Edit</a>
         <a class="dropdown-item" href="tenderdelete.php?id=<?php echo $id;?>">Delete</a>
+        <a class="dropdown-item" href="tenderstats.php?id=<?php echo $id;?>">View bids</a>
         
       </div>
     </div>
@@ -286,7 +286,7 @@ $username = $_SESSION['username'];
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

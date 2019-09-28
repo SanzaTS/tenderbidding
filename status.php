@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
@@ -49,7 +49,7 @@ $username = $_SESSION['username'];
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="bidder.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -263,9 +263,7 @@ $username = $_SESSION['username'];
       $id = $_GET['id'];
  
          
-       $sql = "SELECT b.name,b.surname,b.company,MAX(t.amount)  as amount FROM bidder b,bidding t
-       WHERE b.id = t.bidder_id 
-       AND t.tender_no = '$id'";
+       $sql = "SELECT b.name,b.surname,b.company,t.amount FROM bidder b,bidding t WHERE b.id = t.bidder_id AND t.tender_no = '$id' ORDER BY t.amount DESC LIMIT 1";
  
        $res = mysqli_query($con,$sql) or die(mysqli_error($con)) ;
  
@@ -341,7 +339,7 @@ $username = $_SESSION['username'];
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

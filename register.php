@@ -18,7 +18,7 @@
      $company = mysqli_real_escape_string($con,$_POST['company']);
      $industry = mysqli_real_escape_string($con,$_POST['industry']);
 
-     if(!empty($name)|| !empty($surname) || !empty($idNum) || !empty($email) || !empty($phone) || !empty($username) || empty($password1) ||empty($password2)||empty($industry))
+     if(!empty($name)|| !empty($surname) || !empty($idNum) || !empty($email) || !empty($phone) || !empty($username) || !empty($password1) || !empty($password2)|| !empty($industry))
      {
         if (preg_match("/^[a-zA-Z][0-9a-zA-Z_!$@#^&]{5,20}$/", $username))
         {
@@ -33,7 +33,7 @@
                             {
                                 if (is_numeric($idNum)){
 
-                                    if (is_numeric($phone)){
+                                    if (is_numeric($phone)){ 
                                        $code = substr($phone,0,1);
 
                                        if($code =="0")
@@ -251,7 +251,7 @@
                                     </div>
 
                                     <div class="form-group">
-			                    		<label class="sr-only" for="email">Email</label>
+			                    		<label class="sr-only" for="email">Email</label> 
 			                        	<input type="text" name="email" maxlength="30" placeholder="email..." class="form-email form-control" id="email">
                                     </div>
                                     <div class="form-group">

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
@@ -51,7 +51,7 @@ $username = $_SESSION['username'];
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="bidder.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -74,7 +74,7 @@ $username = $_SESSION['username'];
           <div class="bg-white py-2 collapse-inner rounded">
            <h6 class="collapse-header">Actions to be taken:</h6>
           <a class="collapse-item" href="bidder.php">Make Bid</a>
-            <a class="collapse-item" href="#">Send Massage</a>
+           <a class="collapse-item" href="chat.php">Send Massage</a>
           </div>
         </div>
       </li>
@@ -90,7 +90,7 @@ $username = $_SESSION['username'];
             <h6 class="collapse-header">Views and Genderate Report:</h6>
           <a class="collapse-item" href="bidstats.php">Status</a>
             <a class="collapse-item" href="allbids.php">All Bids</a>
-            <a class="collapse-item" href="#">Notification</a>
+            <a class="collapse-item" href="maessage.php">Notification</a>
            
           </div>
         </div>
@@ -324,7 +324,7 @@ $username = $_SESSION['username'];
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

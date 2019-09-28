@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
@@ -84,7 +84,7 @@ if(isset($_POST['save']))
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="adminReports.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -124,11 +124,11 @@ if(isset($_POST['save']))
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">View and Generate Reports:</h6>
+             <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
-            <a class="collapse-item" href="#">View Users</a>
-            <a class="collapse-item" href="#">View Status</a>
-            <a class="collapse-item" href="#">View Notifications</a>
-          </div>
+            <a class="collapse-item" href="users.php">View Users</a>
+            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="adminMsg.php">View Notifications</a>
         </div>
       </li>
  
@@ -331,7 +331,7 @@ if(isset($_POST['save']))
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

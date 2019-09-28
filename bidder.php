@@ -1,11 +1,11 @@
-<?php
+﻿<?php
 include("session.php");
 include("connection.php");
 
 $username = $_SESSION['username'];
 
 
-$date = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) = 0";
+$date = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) >= 0";
 $results = mysqli_query($con,$date);
 
 if( mysqli_num_rows($results))
@@ -31,6 +31,31 @@ if( mysqli_num_rows($results))
 
   mysqli_query($con,$win);
    
+  $name = "SELECT u.username FROM users u,bidder b WHERE u.id = b.user_id AND b.id =$winner";
+  $res2 = mysqli_query($con,$name);
+  while($rows = mysqli_fetch_array($res2))
+  {
+    $Reciever = $rows['username'];
+  }
+  
+  $massage = "Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>";
+   
+  $sender = "Admin";
+  $sendDate = date("d/m/Y");
+  $sentTime= date("h:i:s");
+
+  $val ="SELECT * FROM chat WHERE reciever = '$username' AND Msg = '$massage'";
+  $res1 = mysqli_query($con,$val);
+  $line = mysqli_num_rows($res1);
+
+  if($line == 0)
+  {
+     echo $line;
+    $insert = "INSERT INTO `chat`( `sender`, `reciever`, `Msg`, `date`, `time`) VALUES ('$sender','$Reciever','$massage','$sendDate','$sentTime')";
+    mysqli_query($con,$insert);
+  }
+  
+
 }
 
 
@@ -81,7 +106,7 @@ if( mysqli_num_rows($results))
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="ibidder.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -120,7 +145,7 @@ if( mysqli_num_rows($results))
             <h6 class="collapse-header">Views and Genderate Report:</h6>
           <a class="collapse-item" href="bidstats.php">Status</a>
             <a class="collapse-item" href="allbids.php">All Bids</a>
-            <a class="collapse-item" href="#">Notification</a>
+            <a class="collapse-item" href="maessage.php">Notification</a>
            
           </div>
         </div>
@@ -328,7 +353,7 @@ if( mysqli_num_rows($results))
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.php">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>
