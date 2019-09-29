@@ -105,9 +105,10 @@ if(isset($_POST['send']))
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">View and Generate Reports:</h6>
+            <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
             <a class="collapse-item" href="users.php">View Users</a>
-            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="stats.php">View Status</a>
             <a class="collapse-item" href="adminMsg.php">View Notifications</a>
           </div>
         </div>

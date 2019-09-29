@@ -91,7 +91,7 @@ $username = $_SESSION['username'];
             <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
             <a class="collapse-item" href="users.php">View Users</a>
-            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="stats.php">View Status</a>
             <a class="collapse-item" href="adminMsg.php">View Notifications</a>
         </div>
       </li>

@@ -92,7 +92,7 @@ $username = $_SESSION['username'];
            <a class="collapse-item" href="adminReports.php">Admin Reports</a>
             <a class="collapse-item" href="tenders.php">View Tenders</a>
             <a class="collapse-item" href="users.php">View Users</a>
-            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="stats.php">View Status</a>
             <a class="collapse-item" href="adminMsg.php">View Notifications</a>
           </div>
         </div>
@@ -174,12 +174,12 @@ $username = $_SESSION['username'];
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Reports</h1>
-<p class="mb-4">Views all users</p>
+<p class="mb-4">Views all awarded tenders</p>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">User Reports</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Awards Reports</h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
