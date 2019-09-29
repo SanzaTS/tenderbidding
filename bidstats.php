@@ -232,8 +232,7 @@ $username = $_SESSION['username'];
                FROM bidder u,bidding b,tender t
                 WHERE u.id = b.bidder_id 
                 AND t.tenderId = b.tender_no 
-                AND b.status = 'Won' 
-                AND t.category = '$cat'";
+                AND b.status = 'Won'";
 
               
               $output = mysqli_query($con,$table) or die(mysqli_error($con));
