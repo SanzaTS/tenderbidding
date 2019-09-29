@@ -463,6 +463,8 @@ if(isset($_POST['pdf']))
             <th>Username</th>
             <th>name</th>
             <th>Surname</th>
+            <th>Id Number</th>
+            <th>Gender</th>
             <th>Company</th>
             <th>Industry</th>
             <th>Email</th>
@@ -491,6 +493,8 @@ if(isset($_POST['pdf']))
                 $id = $row['username'];
                 $name = $row['name'];
                 $surname = $row['surname'];
+                $idNum = $row['id_num'];
+                $gender = $row['gender'];
                 $company = $row['company'];
                 $industry = $row['industry'];
                 $email = $row['email'];
@@ -504,6 +508,8 @@ if(isset($_POST['pdf']))
             <td><?php echo $id; ?></td>
             <td><?php echo $name; ?></td>
             <td><?php echo $surname; ?></td>
+            <td><?php echo $idNum; ?></td>
+            <td><?php echo $gender; ?></td>
             <td><?php echo $company; ?></td>
             <td><?php echo $industry; ?></td>
             <td><?php echo $email; ?></td>

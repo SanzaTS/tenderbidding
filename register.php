@@ -61,7 +61,17 @@
                                                                     if(mysqli_query($con,$sql1) or die(mysqli_error($con)))
                                                                     {
                                                                         $id = mysqli_insert_id($con);
-                                                                        $sql2 = "INSERT INTO `bidder`(`name`, `surname`, `id_num`, `company`, `industry`, `email`, `contact_no`, `user_id`) VALUES('$name','$surname','$idNum','$company','$industry','$email',$phone,$id)";
+                                                                        $sex =  substr($idNum,6,4);
+                                                                        
+                                                                        if($sex < 5000)
+                                                                        {
+                                                                            $gender = "Female";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            $gender = "Male";
+                                                                        }
+                                                                        $sql2 = "INSERT INTO `bidder`(`name`, `surname`, `id_num`, `gender`, `company`, `industry`, `email`, `contact_no`, `user_id`) VALUES('$name','$surname','$idNum','$gender','$company','$industry','$email',$phone,$id)";
                                                                         
                                                                         if(mysqli_query($con,$sql2) or die(mysqli_error($con))){
 
