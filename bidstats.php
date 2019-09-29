@@ -61,7 +61,7 @@ $username = $_SESSION['username'];
 
       <!-- Heading -->
       <div class="sidebar-heading">
-       BIDDER DASHBORD
+       ADMIN DASHBORD
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
@@ -73,8 +73,9 @@ $username = $_SESSION['username'];
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
            <h6 class="collapse-header">Actions to be taken:</h6>
-          <a class="collapse-item" href="bidder.php">Make Bid</a>
-           <a class="collapse-item" href="chat.php">Send Massage</a>
+           <a class="collapse-item" href="addAdmin.php?id=<?php echo $username; ?>">Add Admin</a>
+            <a class="collapse-item" href="admin.php">Add Tenders</a>
+            <a class="collapse-item" href="adminChat.php">Send Notification</a>
           </div>
         </div>
       </li>
@@ -88,9 +89,11 @@ $username = $_SESSION['username'];
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Views and Genderate Report:</h6>
-          <a class="collapse-item" href="bidstats.php">Status</a>
-            <a class="collapse-item" href="allbids.php">All Bids</a>
-            <a class="collapse-item" href="maessage.php">Notification</a>
+            <a class="collapse-item" href="adminReports.php">Admin Reports</a>
+            <a class="collapse-item" href="tenders.php">View Tenders</a>
+            <a class="collapse-item" href="users.php">View Users</a>
+            <a class="collapse-item" href="bidstats.php">View Status</a>
+            <a class="collapse-item" href="adminMsg.php">View Notifications</a>
            
           </div>
         </div>
@@ -233,6 +236,7 @@ $username = $_SESSION['username'];
                 WHERE u.id = b.bidder_id 
                 AND t.tenderId = b.tender_no 
                 AND b.status = 'Won'";
+               
 
               
               $output = mysqli_query($con,$table) or die(mysqli_error($con));
