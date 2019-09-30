@@ -495,47 +495,87 @@ while($row =mysqli_fetch_array($output))
         </thead>
         
         <tbody>
-        <?php
-           
-         
-            //Default data
-            
-              $query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
-                          
-              $rs = mysqli_query($con,$query);
-              while($ln = mysqli_fetch_array($rs)) 
-              {
-                $cat = $ln['id'];
-              }
-            $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
-            WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat";
-            
-            $output = mysqli_query($con,$table) or die(mysqli_error($con));
-
-            while($row =mysqli_fetch_array($output))
-            {
-              $id = $row['tenderId'];
-              $title = $row['tender_title'];
-              $desc = $row['short_description'];
-              $date = $row['due_date'];
-
-              ?>
-                   <tr>
-            <td><?php echo $id; ?></td>
-            <td><?php echo $title; ?></td>
-            <td><?php echo $desc; ?></td>
-            <td><?php echo $date; ?></td>
-            <td><button type="submit" class="btn btn-danger"  ><a href="cancel.php?id=<?php echo $id; ?>"> WITHDRAW</a></button>
-            <button type="submit" class="btn btn-success" ><a href="status.php?id=<?php echo $id; ?>"> STATUS</a></button></td>
-            
-          </tr>
-          <tr>
-              <?php
+          <?php
              
+             $query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+                          
+             $rs = mysqli_query($con,$query);
+             while($ln = mysqli_fetch_array($rs)) 
+             {
+               $cat = $ln['id'];
+             }
+
+            if(isset($_POST['search']))
+            {
+
+                 $keyword = $_POST['query'];
+
+                  $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+                  WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat
+                  AND t.tender_title LIKE '%$keyword%'
+                  OR t.tenderId  = '$keyword' LIMIT 1 ";
+                  
+                  $output = mysqli_query($con,$table) or die(mysqli_error($con));
+      
+                  while($row =mysqli_fetch_array($output))
+                  {
+                    $id = $row['tenderId'];
+                    $title = $row['tender_title'];
+                    $desc = $row['short_description'];
+                    $date = $row['due_date'];
+      
+                    ?>
+                   <tr>
+                  <td><?php echo $id; ?></td>
+                  <td><?php echo $title; ?></td>
+                  <td><?php echo $desc; ?></td>
+                  <td><?php echo $date; ?></td>
+                  <td><button type="submit" class="btn btn-danger"  ><a href="cancel.php?id=<?php echo $id; ?>"> WITHDRAW</a></button>
+                  <button type="submit" class="btn btn-success" ><a href="status.php?id=<?php echo $id; ?>"> STATUS</a></button></td>
+                  
+                  </tr>
+                  <tr>
+              <?php
+               
+              }
+
             }
-           ?>
+            else
+            {
+                //default data
+                $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+                WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat
+                 AND DATEDIFF(NOW(),t.due_date) < 0";
+                
+                $output = mysqli_query($con,$table) or die(mysqli_error($con));
+    
+                while($row =mysqli_fetch_array($output))
+                {
+                  $id = $row['tenderId'];
+                  $title = $row['tender_title'];
+                  $desc = $row['short_description'];
+                  $date = $row['due_date'];
+    
+                  ?>
+                       <tr>
+                <td><?php echo $id; ?></td>
+                <td><?php echo $title; ?></td>
+                <td><?php echo $desc; ?></td>
+                <td><?php echo $date; ?></td>
+                <td><button type="submit" class="btn btn-danger"  ><a href="cancel.php?id=<?php echo $id; ?>"> WITHDRAW</a></button>
+                <button type="submit" class="btn btn-success" ><a href="status.php?id=<?php echo $id; ?>"> STATUS</a></button></td>
+                
+              </tr>
+              <tr>
+                  <?php
+                 
+                }
+
+
+            }
+
           
-          
+          ?>
         </tbody>
       </table>
     </div>

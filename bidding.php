@@ -13,36 +13,85 @@ if(isset($_POST['save'])){
         $id = $row['id'];
     }
     
-    
-  
    $amount = mysqli_real_escape_string($con,$_POST['minimum']);
    $ref = mysqli_real_escape_string($con,$_POST['ref']);
    $date = date("Y-m-d");
-   $min = "";
+  // $min = "";
+  // $max = "";
 
-   $res1 = mysqli_query($con,"SELECT * FROM tender WHERE tenderId = '$ref'");
+    if(is_numeric($amount))
+    { 
+      $val = "  SELECT t.*,b.* FROM tender t,bidding b 
+      WHERE t.tenderId = b.tender_no 
+      AND t.tenderId = '$ref'
+      AND b.bidder_id = $id";
 
-   while($row1 = mysqli_fetch_array($res1))
-   {
-       $due = $row1['due_date'];
-       $min = $row1['min_budget'];
+      $return = mysqli_query($con,$val);
+      $counts = mysqli_num_rows($return);
 
-   }
+      if($counts == 0)
+      {
+        
+        $res1 = mysqli_query($con,"SELECT * FROM tender WHERE tenderId = '$ref'");
 
-    if($amount < $min)
+          while($row1 = mysqli_fetch_array($res1))
+          {
+            $due = $row1['due_date'];
+            $min = $row1['min_budget'];
+            $max = $row['max_budget'];
+     
+             }
+             if($amount >= $min)
+             {
+              $biding = "INSERT INTO `bidding`(`bid_date`, `amount`, `status`,`bidder_id`, `tender_no`) VALUES('$date','$amount','Bidded',$id,'$ref')";
+              if(mysqli_query($con,$biding))
+              {
+                  header("location:allbids.php");
+              }
+                
+             }
+             else
+             { 
+                ?>
+                  <script>
+                    alert('You bid must be atleast equal to the miminum amount');
+                    window.location.href='bidder.php?fail';
+                  </script> 
+
+                <?php
+
+             }
+
+      }
+      else
+      {
+        ?>
+
+          <script>
+           alert('You already bidded for this tender,check for your bids');
+             window.location.href='allbids.php?fail';
+          </script> 
+
+      <?php
+        
+      }
+
+      
+      
+        
+    }
+    else
     {
-        $error = "amount must be higher then initial amount";
-        header("location:bidding.php?id=$ref");
+      ?>
+         <script>
+           alert('amount  must be digits');
+             window.location.href='bidder.php?fail';
+          </script>
+      <?php
     }
-    else{
-        $biding = "INSERT INTO `bidding`(`bid_date`, `amount`, `status`,`bidder_id`, `tender_no`) VALUES('$date','$amount','Bidded',$id,'$ref')";
-       if(mysqli_query($con,$biding))
-       {
-           header("location:bidder.php");
-       }
-       
-    }
-   //$biding = "INSERT INTO bidding "
+  
+  
+  
 
 
 }

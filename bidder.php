@@ -44,19 +44,19 @@ if( mysqli_num_rows($results))
   $sendDate = date("d/m/Y");
   $sentTime= date("h:i:s");
 
-  $val ="SELECT * FROM chat WHERE reciever = '$username' AND Msg = '$massage'";
+  $val ="SELECT * FROM chat WHERE reciever = '$Reciever' AND Msg = '$massage'";
   $res1 = mysqli_query($con,$val);
   $line = mysqli_num_rows($res1);
 
   if($line == 0)
   {
-     echo $line;
+     //echo $line;
     $insert = "INSERT INTO `chat`( `sender`, `reciever`, `Msg`, `date`, `time`) VALUES ('$sender','$Reciever','$massage','$sendDate','$sentTime')";
     mysqli_query($con,$insert);
   }
   
 
-}
+} 
 
 
 

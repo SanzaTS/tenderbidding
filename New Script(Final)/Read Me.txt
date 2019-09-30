@@ -1,0 +1,38 @@
+---Important Points-----
+
+1.Dont panic in your presentation as i saw you guys are panicing too much.
+2.Answer every thing with confidence and make sure you know what you talking about.
+
+
+The database script is the final i added some new tenders to make a bid simpler.
+
+When registering a new user In a dropdown select the "Informatio Technology" option to make sure you get as much tender you can.
+
+The reason why a we use a username for login its because the Admin and Bidder are in a same table Called users so we cant have the bidder registering with a company number
+and the Admin do the same.
+So Admin Table  and A bidder Table they link to the User.
+
+Filtering its when You do search either with a search bar or dropdown or radio group so when they ask for filter ring in the use Allb Bids page they is filtering
+also in admin (Admin Reports the first on on manu )its there .
+
+
+When log in as a bidder it takes you to a page that show tenders.
+You make a bid and after you done it takes you to and page that show tenders you have bidded for youl see " my bids"
+
+You can go to status to see tenders that are close and youll see an winner.
+
+if the due date is close  it will automatically send a winner a notification to inform him that he has won.
+
+When login as a Admin
+
+it takes you to page where admin we view tenders.
+Admin add add an Admin Dynamically a bidder can not be changed to an Admin because he an extenal user
+
+on send notification you can communicate with every user.
+
+the admin reports show admin related reports like All tenders and when you click status then it shows you users per tenderwho have bidded and the status ,
+Users it shows bidders on as system you can delete the but not update them.
+ AND number of users who have bids per user.
+
+status show admin all winnes in every tender when a tender is closed.
+

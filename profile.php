@@ -273,7 +273,7 @@ if(isset($_POST['save'])){
                 <div class="content">                           
                     <form method="post" action="" enctype="multipart/form-data" role="form">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Company Name</label>
                                         <input type="text" class="form-control" disabled placeholder="Company Name" value="<?php echo $row1['company']?>">
@@ -321,10 +321,10 @@ if(isset($_POST['save'])){
                                                 <input type="text" class="form-control" name="email" disabled placeholder="Email Address" value="<?php echo $row1['email'];?>">
                                         </div>
                                     </div>
-                                 <div class="col-md-4">
+                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Contact Number</label>
-                                            <input type="number" class="form-control" name="contact_no" placeholder="ZIP Code" value="<?php echo $row1['contact_no'];?>">
+                                            <input type="number" class="form-control" name="contact_no" placeholder="ZIP Code" value="<?php echo"0". $row1['contact_no'];?>">
                                     </div>
                                  </div>
                                 <div class="col-md-4">

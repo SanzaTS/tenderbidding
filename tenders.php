@@ -42,7 +42,7 @@ $username = $_SESSION['username'];
         </div>
         <div class="sidebar-brand-text mx-3">ADMIN <sup>(TBS)</sup></div>
       </a>
-
+ 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
@@ -186,7 +186,7 @@ $username = $_SESSION['username'];
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
   <?php 
-      $sql = "SELECT * FROM tender";
+      $sql = "SELECT * FROM tender ";
 
       $res = mysqli_query($con,$sql);
 
