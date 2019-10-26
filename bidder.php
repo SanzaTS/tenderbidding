@@ -10,7 +10,7 @@ $results = mysqli_query($con,$date);
 
 $rows = mysqli_num_rows($results);
 //echo $rows;
-if($rows  > 0)
+if($rows  > 0) 
 {
   //$id = array();
   for($i =0;$i <= $rows;$i++)
@@ -99,6 +99,7 @@ if($rows  > 0)
 
 
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +133,7 @@ if($rows  > 0)
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="bidder.php?id=<?php echo $username; ?>">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -144,7 +145,7 @@ if($rows  > 0)
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="ibidder.php">
+        <a class="nav-link" href="bidder.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -283,7 +284,37 @@ if($rows  > 0)
             
           </div>
 
-             
+          <?php
+          $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+       
+          $rs = mysqli_query($con,$query);
+          while($ln = mysqli_fetch_array($rs))
+          {
+            $cat = $ln['industry'];
+          }
+          $sql = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) <= 0 AND category = '$cat'";
+    
+          $results = mysqli_query($con,$sql);
+       
+       ?>
+          <form ame="form_update" method="post" action="bidder.php"> 
+          
+          <select id= "tenders" name="tenders" >
+            <option value="">Select Tender:</option>
+            <?php
+                      while($r = mysqli_fetch_assoc($results))
+                      {
+                      ?>
+                      <option value = "<?php echo($r['tenderId'])?>" >
+                          <?php echo($r['tender_title']) ?>
+                      </option>
+                      <?php
+                      }               
+                  ?>
+            </select>
+            <input type="submit" name="submitOpt" value="Click to search"/>
+            <input type="button" onclick="window.location='bidder.php?id=<?php echo $username; ?>'" value="View All Tenders" >
+          </form>
           <!-- Content Row -->
           <div class="row">
           <div class="col-lg-12">
@@ -295,16 +326,20 @@ if($rows  > 0)
   <!-- Card Header - Dropdown -->
   <?php 
       
-      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id= u.id AND u.username = '$username'";
+      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
        
       $rs = mysqli_query($con,$query);
       while($ln = mysqli_fetch_array($rs))
       {
         $cat = $ln['industry'];
       }
-        
-      $sql = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) <= 0 AND category = '$cat'";
-
+      
+      if(isset($_POST['submitOpt']) &&  $_POST['tenders'] != ""){
+        $selected_val = $_POST['tenders'];
+        $sql = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) <= 0 AND tenderId = '$selected_val' AND category = '$cat'";
+      }else{
+        $sql = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) <= 0 AND category = '$cat'";
+        }
       $res = mysqli_query($con,$sql);
 
       while($row = mysqli_fetch_array($res))

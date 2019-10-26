@@ -10,7 +10,7 @@ if(isset($_POST['save']))
 
   $sysname = $_POST['username'];
   $name = $_POST['name'];
-  $surname =$_POST['username'];
+  $surname =$_POST['surname'];
   $id_num = $_POST['id'];
   $phone = $_POST['phone'];
   $email = $_POST['email'];
@@ -40,11 +40,11 @@ if(isset($_POST['save']))
                                   $row = mysqli_num_rows($res1);
                                   if($row == 0)
                                   {
-                                      $ckId = "SELECT * FROM admin WHERE id_num = $id_num AND email = '$email'";
+                                      $ckId = "SELECT * FROM admin WHERE id_num = $id_num OR email = '$email'";
                                       $res2 = mysqli_query($con,$ckId);
                                       $row1 = mysqli_num_rows($res2);
 
-                                      if($row == 0)
+                                      if($row1 == 0)
                                       {
                                             $sql = "INSERT INTO `users`(`username`, `password`, `role`, `createdAt`, `Active`) VALUES('$sysname','password','Admin','$date','offline')";
                                             if(mysqli_query($con,$sql) or die(mysqli_error($con)))
@@ -69,7 +69,7 @@ if(isset($_POST['save']))
                                       }
                                       else
                                       {
-                                        $error = "Make sure you email and Id do not exists";
+                                        $error = "Make sure you Email and Id Number do not exists";
                                       }
 
 
@@ -146,6 +146,7 @@ if(isset($_POST['save']))
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="assets/ico/favicon.png">
+  <link rel="stylesheet" type="text/css" href="assets/css/fpwdmodal.css">
 </head>
 
 <body id="page-top">
@@ -157,7 +158,7 @@ if(isset($_POST['save']))
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminReports.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -290,80 +291,145 @@ if(isset($_POST['save']))
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <!-- Begin Page Content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Administrators</h4>
+                                <h6 ><a href ="application.php">View Admin Application</a></h6>
+                                <label style="color:red"><?php echo $error; ?></label>
+                                 <button class="category" onclick="Modal.open('#modal02')" style="float: right;"><i class="pe-7s-plus" style="padding-right: 5px;"></i>Add admin</button>
+                             
+                            </div>
+                            
+                           
+                                <table class='table table-hover table-striped'>
+                                  <thead>
+                                      <th>Name</th>
+                                    	<th>Surname</th>
+                                    	<th>Phone</th>
+                                    	<th>Email</th>
+                                  </thead>
+                                    <tbody>
+                                    <?php 
+                                    $sql =  "select * from admin where status = 'Approved'";
+                                    $r = mysqli_query($con,$sql);
+                                    $projects = array();
+                                    while ($project =  mysqli_fetch_assoc($r))
+                                    {
+                                        $projects[] = $project;
+                                    }
+                                    foreach ($projects as $project)
+                                    {
+                                  ?>
+                                    <tr>
+                                        <td><?php echo $project['name']; ?></td>
+                                        <td><?php echo $project['surname']; ?></td>
+                                        <td><?php echo $project['contact_no']; ?></td>
+                                        <td><?php echo $project['email']; ?></td>
+                                    </tr>
+                                  <?php
+                                    }
+                                  ?>
 
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Add New ADMIN</h1>
-            
-          </div>
-          
-          <!-- Content Row -->
-          <div class="row">
-            <div class="col-lg-6 my-auto"> 
-          <form role="form" id="formLogin" novalidate="" method="POST" action="addAdmin.php">
-                <label><?php echo $error; ?></label>
-               
-                
-              <div class="form-group">
-               <label>Useraneme</label>
-                <input class="form-control" name="username" id="username" placeholder="username"  maxlength="20" >
-              </div>
-              <div class="form-group">
-               <label>Name</label>
-                <input class="form-control" name="name" id="name" placeholder="name"  maxlength="20" >
-              </div>
-               <div class="form-group">
-               <label>Surname</label>
-                <input class="form-control" name="surname" id="surname" placeholder="surname" maxlength="25">
-              </div>
-               <div class="form-group">
-               <label>ID Number</label>
-                <input class="form-control" name="id" id="id" placeholder="id number" > 
-               
-              </div>   
-              <div class="form-group">
-               <label>contact Number</label>
-                <input class="form-control" name="phone" id="phone" placeholder="conact number" > 
-               
-              </div>     
-              <div class="form-group">
-               <label>email</label>
-               <input class="form-control"  maxlength="30" name="email" id="email" placeholder="email" >
-              </div>
-              
-              <div >
+                                  </tbody>
+                                </table>
 
+                            
+                        </div>
+                    </div>
 
-              <div>
-
-
-              <button type="submit" class="btn btn-success"  name="save"id="save">Save </button>
-          </form>
-          <br>
-              </div>
-           <div>
-
+                </div>
+            </div>
         </div>
-        <!-- /.container-fluid -->
 
-      </div>
-      <!-- End of Main Content -->
+        <div class="overlay" id="modal02" data-backdrop>
+  <button class="button" data-type="icon" onclick="Modal.close(event)" data-modal-close><svg class="icon icon-clear" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+  <form class="modal modal2" style="width: 100%;" role="form" id="formLogin" method="POST" action="addAdmin.php">
+    <header class="modal--header">
+      <h3 class="modal--title">Add Administrator</h3>
+      
+    </header>
+    <div class="modal--content"> 
+    <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>usrname</label> -->
+                        <input class="form-control" name="username" id="username" placeholder="username"  maxlength="20" required>
+                    </div>
+                </div>
+            </div>
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; TBS 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>Full Name</label> -->
+                        <input class="form-control" name="name" id="name" placeholder="name"  maxlength="20" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>surname</label> -->
+                        <input class="form-control" name="surname" id="surname" placeholder="surname" maxlength="25" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>id</label> -->
+                        <input class="form-control" name="id" id="id" placeholder="id number" required>
+                    </div>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>Phone/label> -->
+                        <input class="form-control" name="phone" id="phone" placeholder="contact number" required> 
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>Email</label> -->
+                        <input class="form-control"  maxlength="30" name="email" id="email" placeholder="email" required>
+                                
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        
+                        <input type="text" class="form-control" name="city" placeholder="City" value="" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                      
+                        <input type="number" class="form-control" name="code" placeholder="ZIP Code" value="" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    
+                </div>
+            </div>-->
+
+            <div class="row">
+                <div class="col-md-12">
+                   
+                </div>
+            </div>
 
     </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
+    <footer class="modal--footer">
+      <button  type="submit"  name="save">Add Admin</button>
+    </footer>
+  </form>
+</div>
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -406,7 +472,7 @@ if(isset($_POST['save']))
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
-
+  <script src="assets/js/fpwdmodal.js"></script>
 </body>
 
 </html>

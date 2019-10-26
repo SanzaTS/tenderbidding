@@ -32,24 +32,57 @@ $username = $_SESSION['username'];
 
 
 <?php
+$error1 = "";
 
 if(isset($_POST['save'])){
                 
                 $name = $_POST['name'];
-                //$email = $_POST['email'];
+                $email = $_POST['email'];
                 $surname = $_POST['surname'];
                 $contact_no = $_POST['contact_no'];
-                //$company = $_POST['company']
+                $company = $_POST['company'];
                // $address = $_POST['address'];
                 
                
+               if($name === ''){
+                        
+              }else{
+                   //SQL statement to enter the items in the database
+                   $sql = "UPDATE bidder SET name ='$name' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                  $res = mysqli_query($con,$sql);
+                  
+                  if (!$res) {
+                      echo "Error: " . $sql . "<br>" . mysqli_error($con);
+                 } else {
+                    
+                      header('Location: profile.php?id='.$username);
+                 }
+                 header('Location: profile.php?id='.$username);
+                  
+              }
                 
-                
-                if($name === ''){
+               if($company === ''){
+                        
+              }else{
+                   //SQL statement to enter the items in the database
+                   $sql = "UPDATE bidder SET company ='$company' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                  $res = mysqli_query($con,$sql);
+                  
+                  if (!$res) {
+                      echo "Error: " . $sql . "<br>" . mysqli_error($con);
+                 } else {
+                    
+                      header('Location: profile.php?id='.$username);
+                 }
+                 header('Location: profile.php?id='.$username);
+                  
+              }
+
+                if($email === ''){
                         
                     }else{
                          //SQL statement to enter the items in the database
-                         $sql = "UPDATE bidder SET name ='$name' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                         $sql = "UPDATE bidder SET email ='$email' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
                         $res = mysqli_query($con,$sql);
                         
                         if (!$res) {
@@ -80,18 +113,46 @@ if(isset($_POST['save'])){
                     if($contact_no === ''){
                         
                     }else{
-                        //SQL statement to enter the items in the database
-                        $sql = "UPDATE bidder SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
-                        $res = mysqli_query($con,$sql);
+                      if (is_numeric($contact_no) && strlen($contact_no) == 10){ 
+                        $code = substr($contact_no,0,1);
 
-                        if (!$res) {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($con);
-                       } else {
-                            header('Location: profile.php?id='.$username);
-                       }
-                       header('Location: profile.php?id='.$username);
-                    }
-                    
+                        if($code =="0")
+                        { 
+                           $second = substr($contact_no,1,1);
+                           if($second == "7" || $second =="8" || $second =="1" || $second =="6")
+                           {
+                                $third = substr($contact_no,2,1);
+                                if($third == "0"||$third == "1"||$third == "2" || $third == "3" || $third == "4" || $third == "6" ||$third == "8"|| $third == "9")
+                                { 
+                                  //SQL statement to enter the items in the database
+                                     $sql = "UPDATE bidder SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                                      $res = mysqli_query($con,$sql);
+
+                                       if (!$res) {
+                                         echo "Error: " . $sql . "<br>" . mysqli_error($con);
+                                         $error1 = "Phone number must be digit";
+                                         } else {
+                                          header('Location: profile.php?id='.$username);
+                                          $error1 = "Phone number must be digit";
+                                         }
+                                           header('Location: profile.php?id='.$username);
+                                           $error1 = "Phone number must be digit";
+                                }else{
+                                              $error1 = "Phone number code should be 07,08,01or 06";
+                                          }
+
+                                       } else{
+                                      
+                                         $error1 = "Phone number should start with 0" ; 
+                                       }
+
+
+                                    } else{
+                                   
+                                        $error1 = "Phone number must be digit";
+                                    }
+                                  }
+                                }
             }//end of isset
         ?>
 
@@ -110,7 +171,7 @@ if(isset($_POST['save'])){
         </div>
         <div class="sidebar-brand-text mx-3">BIDDER<sup>(TBS)</sup></div>
       </a>
-
+ 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
@@ -248,7 +309,7 @@ if(isset($_POST['save'])){
             <h1 class="h3 mb-0 text-gray-800">Edit Profile</h1>
             
           </div>
-
+          <p style="color:red;"><?php echo $error1; ?></p>
              
           <!-- Content Row -->
           <div class="row">
@@ -276,7 +337,7 @@ if(isset($_POST['save'])){
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Company Name</label>
-                                        <input type="text" class="form-control" disabled placeholder="Company Name" value="<?php echo $row1['company']?>">
+                                    <input type="text" name="company" class="form-control" placeholder="Company Name" value="<?php echo $row1['company'];?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -318,13 +379,14 @@ if(isset($_POST['save'])){
                                     <div class="col-md-6">
                                         <div class="form-group">
                                              <label>Email</label>
-                                                <input type="text" class="form-control" name="email" disabled placeholder="Email Address" value="<?php echo $row1['email'];?>">
+                                                <input type="text" class="form-control" name="email"  placeholder="Email Address" value="<?php echo $row1['email'];?>">
                                         </div>
                                     </div>
                                  <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Contact Number</label>
-                                            <input type="number" class="form-control" name="contact_no" placeholder="ZIP Code" value="<?php echo"0". $row1['contact_no'];?>">
+                                            <input type="number" class="form-control" name="contact_no" placeholder="Contact Number" value="<?php echo"0". $row1['contact_no'];?>">
+                                            
                                     </div>
                                  </div>
                                 <div class="col-md-4">

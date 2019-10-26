@@ -60,7 +60,7 @@ $username = $_SESSION['username'];
       <!-- Heading -->
       <div class="sidebar-heading">
        Admin Dashboard
-      </div>
+      </div> 
           <!-- Divider -->
       <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->

@@ -15,7 +15,7 @@ if(isset($_POST['save']))
     $minimum= mysqli_real_escape_string($con,$_POST['minimum']);
     $maximum = mysqli_real_escape_string($con,$_POST['maximum']);
    // $admin_id =
-    $tender_id = "";
+    $tender_id = ""; 
 
     if(!empty($title)||!empty($description)||!empty($description2)||empty($catergory)||empty($date)||!empty($minimum)||!empty($maximum))
     {
@@ -83,7 +83,7 @@ if(isset($_POST['save']))
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminReports.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>

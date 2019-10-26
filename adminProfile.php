@@ -4,7 +4,7 @@ include("connection.php");
 
 $username = $_SESSION['username'];
 
-$error = "";
+$error1 = "";
 
 
 ?>
@@ -80,6 +80,17 @@ if(isset($_POST['save'])){
                     if($contact_no === ''){
                         
                     }else{
+                      if (is_numeric($contact_no) && strlen($contact_no) == 10){ 
+                        $code = substr($contact_no,0,1);
+
+                        if($code =="0")
+                        { 
+                           $second = substr($contact_no,1,1);
+                           if($second == "7" || $second =="8" || $second =="1" || $second =="6")
+                           {
+                                $third = substr($contact_no,2,1);
+                                if($third == "0"||$third == "1"||$third == "2" || $third == "3" || $third == "4" || $third == "6" ||$third == "8"|| $third == "9")
+                                { 
                         //SQL statement to enter the items in the database
                         $sql = "UPDATE admin SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
                         $res = mysqli_query($con,$sql);
@@ -91,7 +102,22 @@ if(isset($_POST['save'])){
                        }
                        header('Location: adminProfile.php?id='.$username);
                     }
-                    
+                    else{
+                      $error = "Phone number code should be 07,08,01or 06";
+                  }
+
+               }
+               else{
+                 $error = "Phone number should start with 0" ; 
+               }
+
+
+            }
+            else{
+                $error = "Phone number must be digit";
+            }
+          }
+        }     
             }//end of isset
         ?>
 
@@ -102,7 +128,7 @@ if(isset($_POST['save'])){
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminReports.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -127,7 +153,7 @@ if(isset($_POST['save'])){
        Admin Dashboard
       </div>
           <!-- Divider -->
-      <hr class="sidebar-divider"> 
+      <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -264,7 +290,7 @@ $row1 = mysqli_fetch_array($res);
                  <div class="col-md-5">
                      <div class="form-group">
                          <label>Email </label>
-                             <input type="text" class="form-control" disabled placeholder="Email" value="<?php echo $row1['email']?>">
+                             <input type="text" class="form-control"  placeholder="Email" value="<?php echo $row1['email']?>">
                      </div>
                  </div>
                  <div class="col-md-3">
@@ -376,7 +402,7 @@ $row1 = mysqli_fetch_array($res);
 </div>
 </div>
 </div>
-
+  
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

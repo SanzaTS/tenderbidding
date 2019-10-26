@@ -25,6 +25,8 @@ $username = $_SESSION['username'];
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+ 
 </head>
 
 <body id="page-top">
@@ -36,7 +38,7 @@ $username = $_SESSION['username'];
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminReports.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -168,14 +170,38 @@ $username = $_SESSION['username'];
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div id="txtHint" class="container-fluid">
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">View Tenders</h1>
             
           </div>
-
+       <?php
+          
+          $opt = "SELECT * FROM tender ";
+    
+          $results = mysqli_query($con,$opt);
+       
+       ?>
+          <form ame="form_update" method="post" action="tenders.php"> 
+          
+<select id= "tenders" name="tenders" >
+  <option value="">Select Tender:</option>
+  <?php
+            while($r = mysqli_fetch_assoc($results))
+            {
+            ?>
+            <option value = "<?php echo($r['tenderId'])?>" >
+                <?php echo($r['tender_title']) ?>
+            </option>
+            <?php
+            }               
+        ?>
+  </select>
+  <input type="submit" name="submitOpt" value="Click to search"/>
+  <input type="button" onclick="window.location='tenders.php?id=<?php echo $username; ?>'" value="View All Tenders" >
+</form>
           <!-- Content Row -->
           <div class="row">
           <div class="col-lg-12">
@@ -186,8 +212,14 @@ $username = $_SESSION['username'];
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
   <?php 
+  
+  if(isset($_POST['submitOpt']) &&  $_POST['tenders'] != ""){
+    $selected_val = $_POST['tenders'];
+    $sql = "SELECT * FROM tender WHERE tenderId = '$selected_val'";
+  
+  }else{
       $sql = "SELECT * FROM tender ";
-
+  }
       $res = mysqli_query($con,$sql);
 
       while($row = mysqli_fetch_array($res))
@@ -204,6 +236,7 @@ $username = $_SESSION['username'];
       
 
   ?>
+  
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     <h4 class="m-0 font-weight-bold text-primary"><?php echo $title?></h4><br>
     <span style="color:blue;font-weight:bold; ">Due Date: <?php echo $date;?></span>
@@ -310,5 +343,5 @@ $username = $_SESSION['username'];
   <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
-
+ 
 </html>

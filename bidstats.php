@@ -4,9 +4,49 @@ include("connection.php");
 
 $username = $_SESSION['username'];
  
+?>
+
+<?php
+	
+  $post_at = "";
+	$post_at_to_date = "";
+	
+	$queryCondition = "";
+	if(!empty($_POST["search"]["post_at"])) {			
+		$post_at = $_POST["search"]["post_at"];
+		list($fid,$fim,$fiy) = explode("-",$post_at);
+		
+		$post_at_todate = date('Y-m-d');
+		if(!empty($_POST["search"]["post_at_to_date"])) {
+			$post_at_to_date = $_POST["search"]["post_at_to_date"];
+			list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
+			$post_at_todate = "$tiy-$tim-$tid";
+		}
+		
+		$queryCondition .= "AND b.bid_date BETWEEN '$fiy-$fim-$fid' AND '" . $post_at_todate . "'";
+	}
+  $query = " SELECT b.industry FROM users u,bidder b WHERE b.user_id = u.id AND u.username = '$username'";
+             
+  $rs = mysqli_query($con,$query);
+  while($ln = mysqli_fetch_array($rs)) 
+  {
+    $cat = $ln['industry'];
+
+  }
+
   
+  $table = "SELECT u.name,u.surname,u.company,b.bid_date,b.amount,b.status,t.tenderId,t.tender_title,t.short_description
+   FROM bidder u,bidding b,tender t
+    WHERE u.id = b.bidder_id 
+    AND t.tenderId = b.tender_no 
+    AND b.status = 'Won' 
+    AND t.category = '$cat'" . $queryCondition . " ORDER BY b.bid_date desc";
+    
+
+	$output = mysqli_query($con,$table) or die(mysqli_error($con));
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +67,9 @@ $username = $_SESSION['username'];
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="assets/ico/favicon.png">
+  
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 </head>
 
@@ -39,7 +82,7 @@ $username = $_SESSION['username'];
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="bidder.php?id=<?php echo $username; ?>">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -191,9 +234,17 @@ $username = $_SESSION['username'];
           </div>
               
  <!-- Content Row -->
- <div class="row">
+ <div class="row"> 
 
    <!-- DataTales Example -->
+   <form name="frmSearch" method="post" action="">
+	 <p class="search_input">
+		<input type="text" placeholder="From Date" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
+	    <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php echo $post_at_to_date; ?>" class="input-control"  />			 
+		<input type="submit" name="go" value="Search" >
+    <input type="button" onclick="window.location='bidstats.php?id=<?php echo $username; ?>'" value="View All" >
+
+	</p>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">My Bids</h6>
@@ -219,59 +270,34 @@ $username = $_SESSION['username'];
         
         <tbody>
         <?php
-              $query = " SELECT b.industry FROM users u,bidder b WHERE b.user_id = u.id AND u.username = '$username'";
-             
-              $rs = mysqli_query($con,$query);
-              while($ln = mysqli_fetch_array($rs)) 
-              {
-                $cat = $ln['industry'];
-              }
-
-
-              $table = "SELECT u.name,u.surname,u.company,b.bid_date,b.amount,b.status,t.tenderId,t.tender_title,t.short_description
-               FROM bidder u,bidding b,tender t
-                WHERE u.id = b.bidder_id 
-                AND t.tenderId = b.tender_no 
-                AND b.status = 'Won' 
-                AND t.category = '$cat'";
+          if(!empty($output))	 {
+	        	while($row = mysqli_fetch_array($output)) {
 
               
-              $output = mysqli_query($con,$table) or die(mysqli_error($con));
-
-              while($row =mysqli_fetch_array($output))
-              {
-                $id = $row['tenderId'];
-                $title = $row['tender_title'];
-                $desc = $row['short_description'];
-                $name = $row['name'];
-                $surname = $row['surname'];
-                $company = $row['company'];
-                $date = $row['bid_date'];
-                $amount = $row['amount'];
-                $status = $row['status']
-              
-
-         ?>
-          <tr>
-            <td><?php echo $id; ?></td>
-            <td><?php echo $title; ?></td>
-            <td><?php echo $desc; ?></td>
-            <td><?php echo $name; ?></td>
-            <td><?php echo $surname; ?></td>
-            <td><?php echo $company; ?></td>
-            <td><?php echo $date; ?></td>
-            <td><?php echo $amount; ?></td>
-            <td style="color:green;font-weight:bold;"><?php echo $status; ?></td>
             
-          </tr>
+	      ?>
           <tr>
+            <td><?php echo $row['tenderId']; ?></td>
+            <td><?php echo $row['tender_title']; ?></td>
+            <td><?php echo $row['short_description']; ?></td>
+            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['surname']; ?></td>
+            <td><?php echo $row['company']; ?></td>
+            <td><?php echo $row['bid_date']; ?></td>
+            <td><?php echo $row['amount']; ?></td>
+            <td style="color:green;font-weight:bold;"><?php echo $row['status']; ?></td>
+            
+          
            <?php
               }
-           ?>
-          
-          
+            }else{
+           ?> 
+           <td>no records</td>
+           </tr>
+           <?php } ?>
         </tbody>
       </table>
+      </form>
     </div>
   </div>
 </div>
@@ -339,7 +365,28 @@ $username = $_SESSION['username'];
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+  
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
 
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+< <script>
+$.datepicker.setDefaults({
+showOn: "button",
+buttonImage: "datepicker.png",
+buttonText: "Date Picker",
+buttonImageOnly: true,
+dateFormat: 'dd-mm-yy'  
+});
+$(function() {
+$("#post_at").datepicker();
+$("#post_at_to_date").datepicker();
+});
+</script>
 </body>
 
 </html>

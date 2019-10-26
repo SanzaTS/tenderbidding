@@ -93,7 +93,7 @@ if(isset($_POST['save'])){
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="bidder.php?id=<?php echo $username; ?>">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -131,7 +131,7 @@ if(isset($_POST['save'])){
             <a class="collapse-item" href="chat.php">Send Massage</a>
           </div>
         </div>
-      </li>
+      </li> 
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">

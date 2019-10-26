@@ -1,0 +1,457 @@
+@-webkit-keyframes showOverlay {
+    from {
+      visibility: hidden;
+      opacity: 0;
+    }
+    to {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  @keyframes showOverlay {
+    from {
+      visibility: hidden;
+      opacity: 0;
+    }
+    to {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes hideOverlay {
+    from {
+      visibility: visible;
+      opacity: 1;
+    }
+    to {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+  @keyframes hideOverlay {
+    from {
+      visibility: visible;
+      opacity: 1;
+    }
+    to {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+  @-webkit-keyframes showModal {
+    from {
+      opacity: 0;
+      -webkit-transform: translateY(75%);
+              transform: translateY(75%);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+              transform: none;
+    }
+  }
+  @keyframes showModal {
+    from {
+      opacity: 0;
+      -webkit-transform: translateY(75%);
+              transform: translateY(75%);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+              transform: none;
+    }
+  }
+  @-webkit-keyframes hideModal {
+    from {
+      opacity: 1;
+      -webkit-transform: none;
+              transform: none;
+    }
+    to {
+      opacity: 0;
+      -webkit-transform: translateY(75%);
+              transform: translateY(75%);
+    }
+  }
+  @keyframes hideModal {
+    from {
+      opacity: 1;
+      -webkit-transform: none;
+              transform: none;
+    }
+    to {
+      opacity: 0;
+      -webkit-transform: translateY(75%);
+              transform: translateY(75%);
+    }
+  }
+  .overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    -webkit-animation-duration: 200ms;
+            animation-duration: 200ms;
+    -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    will-change: transform, opacity;
+    
+  }
+  .overlay[data-backdrop] {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .overlay[data-opened="true"] {
+    pointer-events: auto;
+    -webkit-animation-name: showOverlay;
+            animation-name: showOverlay;
+  }
+  .overlay[data-opened="false"] {
+    -webkit-animation-name: hideOverlay;
+            animation-name: hideOverlay;
+  }
+  .overlay[data-opened="false"]:not([data-type="alert"]) {
+    -webkit-animation-delay: 300ms;
+            animation-delay: 300ms;
+  }
+  
+  .modal {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    height: 100%;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    -webkit-animation-duration: 300ms;
+            animation-duration: 300ms;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    will-change: transform, opacity;
+    width: 35%;
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+  @media (min-width: 640px) {
+    .modal {
+      max-width: 720px;
+      height: auto;
+      max-height: 100%;
+      margin: 1.5rem;
+      border-radius: 4px;
+    }
+  }
+  [data-type="alert"] .modal {
+    max-width: 360px;
+    height: auto;
+    margin: 1rem;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .overlay[data-opened="true"] .modal {
+    -webkit-animation-name: showModal;
+            animation-name: showModal;
+    -webkit-animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            width: 35%;
+            padding-right: 25px;
+            padding-left: 25px;
+  }
+  .overlay[data-opened="true"]:not([data-type="alert"]) .modal {
+    -webkit-animation-delay: 200ms;
+            animation-delay: 200ms;
+  }
+  .overlay[data-opened="false"] .modal {
+    -webkit-animation-name: hideModal;
+            animation-name: hideModal;
+    -webkit-animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+            animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+  .modal--header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .modal--title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: calc(1em + 0.5rem);
+  }
+  .modal--content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-grow: 1;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .modal--footer {
+    display: flex;
+    flex-shrink: 0;
+    min-height: 3rem;
+    padding: 1rem;
+  }
+  .modal--footer:before {
+    flex-grow: 1;
+    order: 1;
+    content: "";
+  }
+  .modal--footer button:first-of-type {
+    order: 0;
+  }
+  .modal--footer button:last-of-type {
+    order: 2;
+  }
+  
+  .button[data-modal-close] {
+    position: absolute;
+    z-index: 1051;
+    top: 16px;
+    right:11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    background: none;
+    border-radius: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: #999999;
+    transition: 200ms ease-out;
+  }
+  .button[data-modal-close]:hover {
+    color: #cccccc;
+  }
+  .modal .button[data-modal-close] {
+    align-self: stretch;
+    color: #cccccc;
+  }
+  .modal .button[data-modal-close]:hover {
+    color: #999999;
+  }
+  .button[data-modal-close] .icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    fill: currentColor;
+  }
+  .btnemail{
+
+    display: block;
+    margin: 0;
+    margin-bottom: -17px;
+
+  }
+  
+  /* <!-- CSS RESET --> */
+
+  * {
+    box-sizing: border-box;
+  }
+
+  
+
+  
+
+  h1 {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    font: 16px/1.5 'Roboto', sans-serif;
+     margin: 0;
+    padding: 7.5%;
+    color: rgba(0, 0, 0, 0.8);
+    max-width: 720px;
+  }
+
+  p {
+    margin: 0 0 1rem;
+    font: 16px/1.5 'Roboto', sans-serif;
+  }
+
+  p:first-child {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  a,
+  button {
+    cursor: pointer;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75em 1rem;
+    font: inherit;
+    font-weight: 500;
+    background: hsl(0, 0%, 95%);
+    border: none;
+    border-radius: 4px;
+    transition: 200ms;
+    margin-top: -11px;
+    font-size: 12px;
+  }
+
+  button:hover {
+    background: hsl(0, 0%, 90%);
+  }
+
+  input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  /* textarea {
+    resize: none;
+    height: 5rem;
+  } */
+
+  #fp-input {
+     width: 100%;
+    margin: 0;
+    padding: 4px 8px;
+    font: inherit;
+    border: 1px solid #ccc;
+  }
+
+  @media (max-width: 768px) {
+
+        .overlay[data-opened="true"] .modal {
+          width: 100%;
+        }
+      
+        .modal {
+          position: relative;
+          display: flex;
+          overflow: hidden;
+          flex-direction: column;
+          height: 226px;
+          text-align: left;
+          background: #fff;
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+          opacity: 0;
+          -webkit-animation-duration: 300ms;
+          animation-duration: 300ms;
+          -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+          will-change: transform, opacity;
+          width: 100%;
+          padding-right: 25px;
+          padding-left: 25px;
+      }
+
+      .modal2{
+        height: 472px;
+      }
+  }  
+
+  /* css for popup email sent */
+
+  .modal-confirm {		
+		color: #636363;
+		width: 325px;
+	}
+	.modal-confirm .modal-content {
+		padding: 20px;
+		border-radius: 5px;
+		border: none;
+	}
+	.modal-confirm .modal-header {
+		border-bottom: none;   
+        position: relative;
+	}
+	.modal-confirm h4 {
+		text-align: center;
+		font-size: 26px;
+		margin: 30px 0 -15px;
+	}
+	.modal-confirm .form-control, .modal-confirm .btn {
+		min-height: 40px;
+		border-radius: 3px; 
+	}
+	.modal-confirm .close {
+        position: absolute;
+		top: -5px;
+		right: -5px;
+	}	
+	.modal-confirm .modal-footer {
+		border: none;
+		text-align: center;
+		border-radius: 5px;
+		font-size: 13px;
+	}	
+	.modal-confirm .icon-box {
+		color: #fff;		
+		position: absolute;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: -70px;
+		width: 95px;
+		height: 95px;
+		border-radius: 50%;
+		z-index: 9;
+		background: #82ce34;
+		padding: 15px;
+		text-align: center;
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+	}
+	.modal-confirm .icon-box i {
+		font-size: 58px;
+		position: relative;
+		top: 3px;
+	}
+	.modal-confirm.modal-dialog {
+		margin-top: 80px;
+	}
+    .modal-confirm .btn {
+        color: #fff;
+        border-radius: 4px;
+		background: #82ce34;
+		text-decoration: none;
+		transition: all 0.4s;
+        line-height: normal;
+        border: none;
+    }
+	.modal-confirm .btn:hover, .modal-confirm .btn:focus {
+		background: #6fb32b;
+		outline: none;
+	}
+	.trigger-btn {
+		display: inline-block;
+		margin: 100px auto;
+	}
