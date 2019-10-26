@@ -1,102 +1,8 @@
-﻿<?php
+<?php
 include("session.php");
 include("connection.php");
 
 $username = $_SESSION['username'];
-if(isset($_POST['save'])){
-    $statement = "SELECT b.id FROM users u,bidder b WHERE u.id = b.user_id   AND u.username = '$username'";
-     
-    $res = mysqli_query($con,$statement);
-
-    while($row = mysqli_fetch_array($res))
-    {
-        $id = $row['id'];
-    }
-    
-   $amount = mysqli_real_escape_string($con,$_POST['minimum']);
-   $ref = mysqli_real_escape_string($con,$_POST['ref']);
-   //$ref = $_GET['id'];
-   $date = date("Y-m-d");
-  // $min = "";
-  // $max = "";
-
-    if(is_numeric($amount))
-    { 
-      $val = "  SELECT t.*,b.* FROM tender t,bidding b 
-      WHERE t.tenderId = b.tender_no 
-      AND t.tenderId = '$ref'
-      AND b.bidder_id = $id";
-
-      $return = mysqli_query($con,$val);
-      $counts = mysqli_num_rows($return);
-
-      if($counts == 0)
-      {
-        
-        $res1 = mysqli_query($con,"SELECT * FROM tender WHERE tenderId = '$ref'");
-
-          while($row1 = mysqli_fetch_array($res1))
-          {
-            $due = $row1['due_date'];
-            $min = $row1['min_budget'];
-            $max = $row['max_budget'];
-     
-             }
-             if($amount >= $min)
-             {
-              $biding = "INSERT INTO `bidding`(`bid_date`, `amount`, `status`,`bidder_id`, `tender_no`) VALUES('$date','$amount','Bidded',$id,'$ref')";
-              if(mysqli_query($con,$biding))
-              {
-                  header("location:allbids.php");
-              }
-                
-             }
-             else
-             { 
-                ?>
-                  <script>
-                    alert('You bid must be atleast equal to the miminum amount');
-                    window.location.href='bidder.php?fail';
-                  </script> 
-
-                <?php
-
-             }
-
-      }
-      else
-      {
-        ?>
-
-          <script>
-           alert('You already bidded for this tender,check for your bids');
-             window.location.href='allbids.php?fail';
-          </script> 
-
-      <?php
-        
-      }
-
-      
-      
-        
-    }
-    else
-    {
-      ?>
-         <script>
-           alert('amount  must be digits');
-             window.location.href='bidder.php?fail';
-          </script>
-      <?php
-    }
-  
-  
-  
-
-
-}
-
 
 
 ?>
@@ -120,7 +26,6 @@ if(isset($_POST['save'])){
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="assets/ico/favicon.png">
-
 </head>
 
 <body id="page-top">
@@ -132,19 +37,19 @@ if(isset($_POST['save'])){
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminReports.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">BIDDER<sup>(TBS)</sup></div>
+        <div class="sidebar-brand-text mx-3">ADMIN <sup>(TBS)</sup></div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="bidder.php">
+      <li class="nav-item active">
+        <a class="nav-link" href="adminReports.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -154,44 +59,45 @@ if(isset($_POST['save'])){
 
       <!-- Heading -->
       <div class="sidebar-heading">
-       BIDDER DASHBORD
+       Admin Dashboard
       </div>
-
+          <!-- Divider -->
+      <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Action</span>
+          <span>Actions</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-           <h6 class="collapse-header">Actions to be taken:</h6>
-           <a class="collapse-item" href="bidder.php">Make Bid</a>
-            <a class="collapse-item" href="chat.php">Send Massage</a>
+            <h6 class="collapse-header"> Preform Admin Actions:</h6>
+            <a class="collapse-item" href="addAdmin.php?id=<?php echo $username; ?>">Add Admin</a>
+            <a class="collapse-item" href="admin.php">Add Tenders</a>
+            <a class="collapse-item" href="adminChat.php">Send Notification</a>
           </div>
         </div>
       </li>
-
+  <!-- Divider -->
+  <hr class="sidebar-divider">
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Views</span>
+          <span>View</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Views and Genderate Report:</h6>
-            <a class="collapse-item" href="bidstats.php">Status</a>
-            <a class="collapse-item" href="allbids.php">All Bids</a>
-            <a class="collapse-item" href="maessage.php">Notification</a>
+            <h6 class="collapse-header">View and Generate Reports:</h6>
+            <a class="collapse-item" href="adminReports.php">Admin Reports</a>
+            <a class="collapse-item" href="tenders.php">View Tenders</a>
+            <a class="collapse-item" href="users.php">View Users</a>
+            <a class="collapse-item" href="stats.php">View Status</a>
+            <a class="collapse-item" href="adminMsg.php">View Notifications</a>
           </div>
         </div>
       </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-     
+ 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -217,7 +123,7 @@ if(isset($_POST['save'])){
             <i class="fa fa-bars"></i>
           </button>
 
-  
+         
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -227,38 +133,28 @@ if(isset($_POST['save'])){
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+            
             </li>
 
+         
 
            
+
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $username."[-BIDDER-]";  ?></span>
-                <!--<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> -->
+                
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $username."[-ADMIN-]" ?></span>
+               <!-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> -->
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="profile.php">
+                <a class="dropdown-item" href="adminProfile.php">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-              
                 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -273,94 +169,116 @@ if(isset($_POST['save'])){
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
 
-           <!-- Page Heading -->
-           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">View Tenders</h1>
-            
-          </div>
-
-             
-          <!-- Content Row -->
-          <div class="row">
-          <div class="col-lg-12">
-
-
-
-<!-- Dropdown Card Example -->
-<div class="card shadow mb-4">
-  <!-- Card Header - Dropdown -->
-  <?php 
-      
-      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
-       
-      $id =  $_GET['id'];
-        
-      $sql = "SELECT * FROM tender WHERE tenderId = '$id'";
-
-      $res = mysqli_query($con,$sql);
-
-      while($row = mysqli_fetch_array($res))
-      {
-         $id = $row['tenderId'];
-         $title = $row['tender_title'];
-         $date = $row['due_date'];
-         $desc = $row['short_description'];
-         $desc2 = $row['full_description'];
-         $catergory = $row['category'];
-         $min = $row['min_budget'];
-         $max = $row['max_budget'];
-        
-      
-
-  ?>
-  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-    <h4 class="m-0 font-weight-bold text-primary"><?php echo $title?></h4><br>
-    <span style="color:blue;font-weight:bold; ">Due Date: <?php echo $date;?></span>
-    
-    
-  </div>
-  <!-- Card Body -->
-  <div class="card-body">
-    
-     <h6 style="color:red;font-weight:bold"><?php echo $desc;?><h6>
-     <br>
-    
-     
-     <h6 style="color:orange;">MINIMUM BUDGET:R<?php echo $min;?><h6>
-     <h6 style="color:orange;">Catergory: <?php echo $catergory; ?>
-     <br>
-     <p class="m-0 font-weight-bold text-primary"><?php echo $desc2; ?></p><br>
-
-
-
-     <form role="form" id="formLogin" novalidate="" method="POST" action="bidding.php">
-     <div class="form-group">
-               <label>Reference Number</label>
-                <input class="form-control"  maxlength="12" name="ref" id="ref" value="<?php echo $id ?>" readonly >
-              </div>
-     <div class="form-group">
-               <label>Initial  Bid</label>
-                <input class="form-control"  maxlength="12" name="minimum" id="minimum" placeholder="Initial Bid" >
-              </div>
-     <button type="submit" class="btn btn-success"  name="save"id="save"> Bid</button>
-          <br>
-          <a style="margin-left:250;" href="bidder.php">Back To Tenders<a>
-     <form>
-     
-  </div>
-
-  <?php
-   }
-
-?>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+ 
 </div>
 
-         
-        </div>
-        <!-- /.container-fluid -->
+
+
+ 
+<!-- Content Row -->
+
+<div class="row">
+
+  <!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800"></h1>
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Awaiting for Approval</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+           
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Phone</th>
+            <th>email</th>
+            <th>Gender</th>
+            <th>Status</th>
+            <th>Action</th>
+            
+
+
+            
+            
+          </tr>
+        </thead>
+        
+        <tbody>
+        <?php
+             // $tender = $_GET['id'];
+
+
+            $table = "SELECT * FROM admin WHERE status ='Waiting Approval' ";
+                
+
+              
+              $output = mysqli_query($con,$table) or die(mysqli_error($con));
+
+              while($row =mysqli_fetch_array($output))
+              {
+                
+                $id = $row['id'];
+                $name = $row['name'];
+                $surname = $row['surname'];
+                $phone = $row['contact_no'];
+                $email = $row['email'];
+                $gender = $row['gender'];
+                $status = $row['status'];
+
+                
+              
+
+         ?>
+          <tr>
+            <td><?php echo $name; ?></td>
+            <td><?php echo $surname; ?></td>
+            <td><?php echo $phone; ?></td>
+            <td><?php echo $email; ?></td>
+            <td><?php echo $gender; ?></td>
+            <td><?php echo $status; ?></td>
+            <td><button type="submit" class="btn btn-success"  ><a href="aprove.php?id=<?php echo $id; ?>"> Aprove</a></button></td>
+           
+            
+           
+           
+            
+          </tr>
+          <tr>
+           <?php
+              }
+           ?>
+          
+          
+        </tbody>
+        
+      </table>
+      
+   
+      <td><button type="submit" class="btn btn-success"  ><a href="addAdmin.php">add admin</a></button></td>
+    </div>
+  </div>
+</div>
+
+ 
+
+
+</div>
+
+</div>
+<!-- /.container-fluid -->
+
 
       </div>
       <!-- End of Main Content -->
@@ -414,6 +332,13 @@ if(isset($_POST['save'])){
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

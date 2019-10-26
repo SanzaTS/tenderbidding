@@ -17,6 +17,7 @@
      $password2 =  mysqli_real_escape_string($con,$_POST['password2']);
      $company = mysqli_real_escape_string($con,$_POST['company']);
      $industry = mysqli_real_escape_string($con,$_POST['industry']);
+     $role = mysqli_real_escape_string($con,$_POST['role']);
 
      if(!empty($name)|| !empty($surname) || !empty($idNum) || !empty($email) || !empty($phone) || !empty($username) || !empty($password1) || !empty($password2)|| !empty($industry))
      {
@@ -56,7 +57,42 @@
                                                                 $check2 = mysqli_query($con,"SELECT * FROM bidder WHERE email = '$email'");
                                                                 if(mysqli_num_rows($check2)== 0)
                                                                 {
-                                                                    $date = date("Y-m-d");
+                                                                    if($role == "Admin")
+                                                                    { 
+                                                                        $date = date("Y-m-d");
+ 
+                                                                    $sql1 = "INSERT INTO users(username,password,role,createdAt,Active) VALUES('$username','$password1','Admin','$date','online')";
+                                                                    if(mysqli_query($con,$sql1) or die(mysqli_error($con)))
+                                                                    {
+                                                                        $id = mysqli_insert_id($con);
+                                                                        
+                                                                        $sex =  substr($idNum,6,4);
+                                                                        
+                                                                        if($sex < 5000)
+                                                                        {
+                                                                            $gender = "Female";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            $gender = "Male";
+                                                                        }
+                                                                        
+                                                                        
+                                                                        $sql2 = "INSERT INTO  `admin`( `name`, `surname`, `id_num`, `gender`, `email`, `contact_no`, `status`, `user_id`) VALUES('$name','$surname','$idNum','$gender','$email',$phone,'Waiting Approval',$id)";
+                                                                        
+                                                                        if(mysqli_query($con,$sql2) or die(mysqli_error($con))){
+
+                                                                            $_SESSION['username'] = $username;
+                                                                           $error ="Your details have been captured,waiting for approval.";
+                                                                           //header("location:register.php");
+                                                                        }
+                                                                    }
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $date = date("Y-m-d");
+ 
                                                                     $sql1 = "INSERT INTO users(username,password,role,createdAt,Active) VALUES('$username','$password1','Bidder','$date','online')";
                                                                     if(mysqli_query($con,$sql1) or die(mysqli_error($con)))
                                                                     {
@@ -79,6 +115,7 @@
                                                                            // $error ="Successfully loaded";
                                                                            header("location:bidder.php");
                                                                         }
+                                                                      }
                                                                     }
         
                                                                 }
@@ -269,6 +306,15 @@
 			                        	<input type="text"  maxlength="10" name="phone"  placeholder="Contact Number..." class="form-username form-control" id="phone">
                                     </div>
                                     
+                                    <div class="form-group">
+			                    		<label class="sr-only" for="id" >Register As</label>
+			                        	<select name="role" class="form-id form-control" >
+                                         <option>---Select your role---</option>
+                                         <option value="Admin">Admin<option>
+                                         <option value="Bidder">Bidder</option>
+                                        </select>
+                                    </div>
+
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="username">Username</label>
 			                        	<input type="text" maxlength="30" name="username" placeholder="Username..." class="form-username form-control" id="form-username">

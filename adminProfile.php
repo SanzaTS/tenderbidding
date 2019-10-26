@@ -127,7 +127,7 @@ if(isset($_POST['save'])){
        Admin Dashboard
       </div>
           <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr class="sidebar-divider"> 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">

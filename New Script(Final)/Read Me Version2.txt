@@ -8,13 +8,26 @@ The database script is the final i added some new tenders to make a bid simpler.
 
 When registering a new user In a dropdown select the "Informatio Technology" option to make sure you get as much tender you can.
 
-The reason why a we use a username for login its because the Admin and Bidder are in a same table Called users so we cant have the bidder registering with a company number
-and the Admin do the same.
+========================================================================================================
+= the id ididnt change because it coz a lot of errors which were going to take forever to fix mind you =
+= i would have finish on time, try to be creative and tell your lectures them about the problem also   =
+= explain to them that although id is a primary key we wont have to users sharing the username and also=
+= that id is autoincrementent to also avoid duplicates                                                 =
+========================================================================================================
+
+
 So Admin Table  and A bidder Table they link to the User.
+
+NB//I didnt remove the tendernumber in the bidding because it at as a reference when we enter the database.
+
+
 
 Filtering its when You do search either with a search bar or dropdown or radio group so when they ask for filter ring in the use Allb Bids page they is filtering
 also in admin (Admin Reports the first on on manu )its there .
 
+In the main page you can search for tenders.
+
+In awarded you can filter with a data;
 
 When log in as a bidder it takes you to a page that show tenders.
 You make a bid and after you done it takes you to and page that show tenders you have bidded for youl see " my bids"
@@ -35,4 +48,23 @@ Users it shows bidders on as system you can delete the but not update them.
  AND number of users who have bids per user.
 
 status show admin all winnes in every tender when a tender is closed.
+
+
+Please not it not required to validate the tender that has been close because the system autamtically doesnt show the tenders that have expired.
+
+The awarded bid shows all the tenders that are closed and have the winner thata history;
+
+All bids show the tenders that are in progress for the user.
+
+Only admin can view tenders that are closed.
+
+Although i dont why an admin should apply but i did it so you can choose whether you  register as admin or bidder.
+
+once an admin is done you can registering he cant login until he or her is been approved.
+
+data bound image a admin or bidder can click the smily winky emoji to send him to main page.
+
+all the best be confidence make sure you know what you talking about.
+
+
 

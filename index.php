@@ -28,22 +28,41 @@ include("session.php");
             $role = $row['role'];
 
         }
-        mysqli_query($con,"UPDATE users SET Active = 'online' WHERE username = '$username' ");
+      
         
        if($role == "Admin"){
 
 
-         $_SESSION['username'] = $username;
+         
 
+         $get = "SELECT a.status FROM users u,admin a WHERE u.id = a.user_id AND u.username = '$username'";
+         $res = mysqli_query($con,$get);
+
+         while($line = mysqli_fetch_array($res))
+         {
+             $status = $line['status'];
+
+             
+         }
+         
+        if($status == "Waiting Approval")
+         {
+            $error = "Your application has not been approved !";
+         }
+         else
+         {
+            
+            mysqli_query($con,"UPDATE users SET Active = 'online' WHERE username = '$username' ");
+            $_SESSION['username'] = $username;
+            header("location:admin.php");
+         }
            
-           header("location:admin.php");
-
-
            
 
        }
        else{
         $_SESSION['username'] = $username;
+        mysqli_query($con,"UPDATE users SET Active = 'online' WHERE username = '$username' ");
         header("location:bidder.php");
           
        }
@@ -128,11 +147,11 @@ include("session.php");
 			                    	<label style="color:red;"><?php echo $error; ?></label>
                                     <div class="form-group">
 			                    		<label class="sr-only" for="username">Username</label>
-			                        	<input type="text" name="username" placeholder="Username..." class="form-username form-control" id="form-username">
+			                        	<input type="text" name="username" placeholder="Username..." class="form-username form-control" id="form-username" required>
 			                        </div>
 			                        <div class="form-group">
 			                        	<label class="sr-only" for="password">Password</label>
-			                        	<input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
+			                        	<input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password" required>
 			                        </div>
                                     <button type="submit" name="login" class="btn">Sign in!</button><br>
                                     <a href="register.php">Dont have an account?</a>

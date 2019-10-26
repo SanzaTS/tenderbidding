@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2019 at 09:56 PM
+-- Generation Time: Oct 26, 2019 at 04:41 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -33,8 +33,10 @@ CREATE TABLE `admin` (
   `name` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
   `id_num` bigint(13) NOT NULL,
+  `gender` varchar(10) NOT NULL,
   `email` varchar(30) NOT NULL,
   `contact_no` varchar(10) NOT NULL,
+  `status` varchar(20) NOT NULL,
   `user_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -42,10 +44,11 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `name`, `surname`, `id_num`, `email`, `contact_no`, `user_id`) VALUES
-(1, 'jackson', 'kambule', 1234567890123, 'jackson.k47@gmail.com', '0724966578', 4),
-(2, 'xolani', 'jetmi', 6701094822091, 'xolani@gmail.com', '0712243653', 12),
-(3, 'senzo', 'atmost', 9708095678087, 'senzo@gmail.com', '0724966578', 13);
+INSERT INTO `admin` (`id`, `name`, `surname`, `id_num`, `gender`, `email`, `contact_no`, `status`, `user_id`) VALUES
+(1, 'jackson', 'kambule', 9709085739086, 'Male', 'jackson.k47@gmail.com', '0724966578', 'Approved', 4),
+(2, 'xolani', 'jetmi', 6701096822091, 'Male', 'xolani@gmail.com', '0712243653', 'Approved', 12),
+(3, 'senzo', 'atmost', 9708095678087, 'Male', 'senzo@gmail.com', '0724966578', 'Approved', 13),
+(8, 'thembelani', 'shalule', 8608167476081, 'Male', 'peter@abasa.co.za', '836889937', 'Waiting Approval', 19);
 
 -- --------------------------------------------------------
 
@@ -97,8 +100,8 @@ CREATE TABLE `bidding` (
 
 INSERT INTO `bidding` (`bid_no`, `bid_date`, `amount`, `status`, `bidder_id`, `tender_no`) VALUES
 (6, '2019-09-20', 200000.00, 'Bidded', 6, 'TBS/19-NLQ'),
-(7, '2019-09-20', 250000.00, 'Bidded', 6, 'TBS/19-XHD'),
-(8, '2019-09-20', 120000.00, 'Bidded', 7, 'TBS/19-JTY'),
+(7, '2019-09-20', 250000.00, 'Won', 6, 'TBS/19-XHD'),
+(8, '2019-09-20', 120000.00, 'Won', 7, 'TBS/19-JTY'),
 (9, '2019-09-24', 210000.00, 'Bidded', 5, 'TBS/19-NLQ'),
 (12, '2019-09-25', 1200000.00, 'Bidded', 6, 'TBS/19-WNJ'),
 (13, '2019-09-25', 1400000.00, 'Won', 5, 'TBS/19-WNJ'),
@@ -126,7 +129,9 @@ CREATE TABLE `chat` (
 INSERT INTO `chat` (`mid`, `sender`, `reciever`, `Msg`, `date`, `time`) VALUES
 (1, 'Admin', 'SanzaTs', 'Hey man are you good', '28/09/2019', '01:23:43'),
 (2, 'Sbudda', 'Admin', 'Sho', '28/09/2019', '02:45:44'),
-(5, 'Admin', 'SanzaTs', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '28/09/2019', '08:33:35');
+(98, 'Admin', 'BusiMc', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '26/10/2019', '04:11:05'),
+(99, 'Admin', 'SanzaTs', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '26/10/2019', '04:11:05'),
+(100, 'Admin', 'Sbudda', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '26/10/2019', '04:11:05');
 
 -- --------------------------------------------------------
 
@@ -155,9 +160,11 @@ INSERT INTO `tender` (`tenderId`, `tender_title`, `short_description`, `full_des
 ('TBS/19-JTY', 'HEALTH Supplier', 'Supply Hospital with medi', 'The bid is to supply hospital across Gauteng forthe next 2 years', 'Health', '2019-10-24', 20000.00, 4000000.00, 1),
 ('TBS/19-LUB', 'RDP Construction', 'Build RDP Houses', 'Gauteng government is looking for constr.uction company who will  build RDP Houses at Soshsanguve ', 'Construction', '2019-10-18', 200000.00, 10000000.00, 1),
 ('TBS/19-NLQ', 'IT Supply ', 'Supply IT Gadget', 'ABSA is looking for company to supply IT Equipment for our new branch and other upcoming branch for the next 5 years.If interested please place your bid and the highest will be awarded', 'Infomation Technology', '2019-10-31', 100000.00, 2000000.00, 1),
+('TBS/19-SQK', 'IT Migration', 'Migrating OLD with New', 'We need IT consultant who are going to offer us migration from our legacy system to  ERP Systems  and maintain it during the pilot phase till phase out', 'Infomation Technology', '2019-10-29', 1000000.00, 4000000.00, 1),
 ('TBS/19-WNJ', 'IT Maintainance', 'Provide IT Mantainance', 'We invite IT Companies to make a bid to be our contract mantainance for the next 2 years .', 'Infomation Technology', '2019-09-25', 1000000.00, 600000.00, 1),
 ('TBS/19-XHD', 'Software Consultant', 'Payroll System', 'Department of Labour is looking for a Software Development company who is going to implement the Departments payroll system as the current has been rejected based on many problems.', 'Infomation Technology', '2019-10-26', 200000.00, 4000000.00, 1),
-('TBS/19-YWX', 'IT Outsourcing', 'Built In-House Systems', 'SARS is looking for a software development company to take part in a project for building our new system.', 'Infomation Technology', '2019-10-16', 180000.00, 4000000.00, 1);
+('TBS/19-YWX', 'IT Outsourcing', 'Built In-House Systems', 'SARS is looking for a software development company to take part in a project for building our new system.', 'Infomation Technology', '2019-10-16', 180000.00, 4000000.00, 1),
+('TBS/19-ZGD', 'IT Audit', 'Risk management', 'We need it campany who is going to offer us their service for risk management  and fra', 'Infomation Technology', '2019-10-31', 1000000.00, 6000000.00, 1);
 
 -- --------------------------------------------------------
 
@@ -179,13 +186,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `createdAt`, `Active`) VALUES
-(4, 'Admin', 'password', 'Admin', '2019-08-19', 'offline'),
+(4, 'Admin', 'password', 'Admin', '2019-08-19', 'online'),
 (9, 'SanzaTs', 'password', 'Bidder', '2019-08-22', 'offline'),
-(10, 'Sbudda', 'password', 'Bidder', '2019-08-22', 'online'),
+(10, 'Sbudda', 'password', 'Bidder', '2019-08-22', 'offline'),
 (11, 'BusiMc', 'password', 'Bidder', '2019-08-23', 'offlline'),
 (12, 'jetmi', 'password', 'Admin', '2019-09-28', 'offline'),
 (13, 'atmost', 'password', 'Admin', '2019-09-28', 'offline'),
-(14, 'Thabzin', 'password', 'Bidder', '2019-09-30', 'offline');
+(14, 'Thabzin', 'password', 'Bidder', '2019-09-30', 'offline'),
+(19, 'Peters', 'password', 'Admin', '2019-10-26', 'online');
 
 --
 -- Indexes for dumped tables
@@ -240,7 +248,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `bidder`
@@ -252,19 +260,19 @@ ALTER TABLE `bidder`
 -- AUTO_INCREMENT for table `bidding`
 --
 ALTER TABLE `bidding`
-  MODIFY `bid_no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `bid_no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables

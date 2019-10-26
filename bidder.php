@@ -8,53 +8,91 @@ $username = $_SESSION['username'];
 $date = "SELECT * FROM tender WHERE DATEDIFF(NOW(),`due_date`) >= 0";
 $results = mysqli_query($con,$date);
 
-if( mysqli_num_rows($results))
+$rows = mysqli_num_rows($results);
+//echo $rows;
+if($rows  > 0)
 {
-   while($line = mysqli_fetch_array($results))
-   {
-     $id = $line['tenderId'];
-   }
-
-   $fetch = "SELECT * FROM `bidding` WHERE amount = (SELECT MAX(amount) FROM bidding WHERE `tender_no` = '$id')";
-
-   $bidder = mysqli_query($con,$fetch);
-   
-   while($user = mysqli_fetch_array($bidder))
-   {
-      $winner = $user['bidder_id'];
-   }
-
-  
-
- $win = "UPDATE bidding SET status = 'Won' WHERE tender_no = '$id'
-  AND bidder_id = $winner";
-
-  mysqli_query($con,$win);
-   
-  $name = "SELECT u.username FROM users u,bidder b WHERE u.id = b.user_id AND b.id =$winner";
-  $res2 = mysqli_query($con,$name);
-  while($rows = mysqli_fetch_array($res2))
+  //$id = array();
+  for($i =0;$i <= $rows;$i++)
   {
-    $Reciever = $rows['username'];
-  }
-  
-  $massage = "Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>";
+     
+    while($line = mysqli_fetch_array($results))
+    {
+     $id = array($line['tenderId']);
+     // echo $id[$i];
+
+
+      $fetch = "SELECT * FROM `bidding` WHERE amount = (SELECT MAX(amount) FROM bidding WHERE `tender_no` = '$id[$i]')";
+      $bidder = mysqli_query($con,$fetch) or die(mysqli_error($con));
    
-  $sender = "Admin";
-  $sendDate = date("d/m/Y");
-  $sentTime= date("h:i:s");
+      while($user = mysqli_fetch_array($bidder))
+      {
+         $winner =array($user['bidder_id']) ;
 
-  $val ="SELECT * FROM chat WHERE reciever = '$Reciever' AND Msg = '$massage'";
-  $res1 = mysqli_query($con,$val);
-  $line = mysqli_num_rows($res1);
+         //echo "id is :" .$winner ."<br>";
 
-  if($line == 0)
-  {
-     //echo $line;
-    $insert = "INSERT INTO `chat`( `sender`, `reciever`, `Msg`, `date`, `time`) VALUES ('$sender','$Reciever','$massage','$sendDate','$sentTime')";
-    mysqli_query($con,$insert);
+         $win = "UPDATE bidding SET status = 'Won' WHERE tender_no = '$id[$i]'
+         AND bidder_id = $winner[$i]";
+
+          mysqli_query($con,$win);
+
+          $name = "SELECT u.username FROM users u,bidder b WHERE u.id = b.user_id AND b.id =$winner[$i]";
+          $res2 = mysqli_query($con,$name);
+
+          while($rows = mysqli_fetch_array($res2))
+          {
+             $Reciever = array($rows['username']);
+
+               
+                $massage = "Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>";
+                
+                $sender = "Admin";
+                $sendDate = date("d/m/Y");
+                $sentTime= date("h:i:s");
+
+
+                $val ="SELECT * FROM chat WHERE reciever = '$Reciever[$i]' AND Msg = '$massage'";
+                $res1 = mysqli_query($con,$val);
+                
+               
+                      $del = "DELETE FROM chat WHERE Msg = '$massage'";
+                      mysqli_query($con,$del);
+                       $sorce = array($sender);
+                       $msg =array($massage);
+                       $time = array($sentTime);
+                       $date1 = array($sendDate);
+                    //  echo $Reciever[$i];
+                    //  echo $date1[$i];
+                      
+                        $insert = "INSERT INTO `chat`( `sender`, `reciever`, `Msg`, `date`, `time`) VALUES ";
+                        for($x =0; $x < count($Reciever);$x++)
+                        {
+                          $array[] = "('$sorce[$x]','$Reciever[$x]','$msg[$x]','$date1[$x]','$time[$x]')";
+                        }
+                         $insert .= implode(',', $array);
+                         mysqli_query($con,$insert);
+                      
+                     
+                   
+
+
+                     
+             
+                
+
+           }
+      }
+       
+    }
+   
+   
+   // echo $id[$i];
   }
+   
+
+
   
+
 
 } 
 
@@ -257,7 +295,7 @@ if( mysqli_num_rows($results))
   <!-- Card Header - Dropdown -->
   <?php 
       
-      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id= u.id AND u.username = '$username'";
        
       $rs = mysqli_query($con,$query);
       while($ln = mysqli_fetch_array($rs))
