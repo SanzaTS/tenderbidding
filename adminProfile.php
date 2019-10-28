@@ -49,7 +49,7 @@ if(isset($_POST['save'])){
                         
                     }else{
                          //SQL statement to enter the items in the database
-                         $sql = "UPDATE admin SET name ='$name' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                         $sql = "UPDATE admin SET name ='$name' WHERE user_id=(SELECT id FROM user WHERE username = '$username')";
                         $res = mysqli_query($con,$sql);
                         
                         if (!$res) {
@@ -66,7 +66,7 @@ if(isset($_POST['save'])){
                         
                     }else{
                         //SQL statement to enter the items in the database
-                        $sql = "UPDATE admin SET surname ='$surname' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                        $sql = "UPDATE admin SET surname ='$surname' WHERE user_id=(SELECT id FROM user WHERE username = '$username')";
                         $res = mysqli_query($con,$sql);
 
                         if (!$res) {
@@ -92,7 +92,7 @@ if(isset($_POST['save'])){
                                 if($third == "0"||$third == "1"||$third == "2" || $third == "3" || $third == "4" || $third == "6" ||$third == "8"|| $third == "9")
                                 { 
                         //SQL statement to enter the items in the database
-                        $sql = "UPDATE admin SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                        $sql = "UPDATE admin SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM user WHERE username = '$username')";
                         $res = mysqli_query($con,$sql);
 
                         if (!$res) {
@@ -275,7 +275,7 @@ if(isset($_POST['save'])){
 <!-- Card Header - Dropdown -->
 <?php 
 
-$query = " SELECT a.name, a.surname, a.email, a.contact_no FROM admin a ,users u WHERE a.user_id = u.id AND u.username = '$username'";
+$query = " SELECT a.name, a.surname, a.email, a.contact_no FROM admin a ,user u WHERE a.user_id = u.id AND u.username = '$username'";
 $res = mysqli_query($con,$query);
 $row1 = mysqli_fetch_array($res);
 

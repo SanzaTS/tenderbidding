@@ -22,7 +22,7 @@ if($rows  > 0)
      // echo $id[$i];
 
 
-      $fetch = "SELECT * FROM `bidding` WHERE amount = (SELECT MAX(amount) FROM bidding WHERE `tender_no` = '$id[$i]')";
+      $fetch = "SELECT * FROM `bid` WHERE amount = (SELECT MAX(amount) FROM bid WHERE `tender_no` = '$id[$i]')";
       $bidder = mysqli_query($con,$fetch) or die(mysqli_error($con));
    
       while($user = mysqli_fetch_array($bidder))
@@ -31,12 +31,12 @@ if($rows  > 0)
 
          //echo "id is :" .$winner ."<br>";
 
-         $win = "UPDATE bidding SET status = 'Won' WHERE tender_no = '$id[$i]'
+         $win = "UPDATE bid SET status = 'Won' WHERE tender_no = '$id[$i]'
          AND bidder_id = $winner[$i]";
 
           mysqli_query($con,$win);
 
-          $name = "SELECT u.username FROM users u,bidder b WHERE u.id = b.user_id AND b.id =$winner[$i]";
+          $name = "SELECT u.username FROM user u,bidder b WHERE u.id = b.user_id AND b.id =$winner[$i]";
           $res2 = mysqli_query($con,$name);
 
           while($rows = mysqli_fetch_array($res2))
@@ -285,7 +285,7 @@ if($rows  > 0)
           </div>
 
           <?php
-          $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+          $query = " SELECT b.industry FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
        
           $rs = mysqli_query($con,$query);
           while($ln = mysqli_fetch_array($rs))
@@ -326,7 +326,7 @@ if($rows  > 0)
   <!-- Card Header - Dropdown -->
   <?php 
       
-      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+      $query = " SELECT b.industry FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
        
       $rs = mysqli_query($con,$query);
       while($ln = mysqli_fetch_array($rs))

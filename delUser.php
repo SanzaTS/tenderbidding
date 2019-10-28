@@ -4,7 +4,7 @@
 
   $username = $_GET['id'];
   
-  $user ="SELECT b.id FROM users u,bidder b WHERE b.user_id = u.id AND username = '$username'";
+  $user ="SELECT b.id FROM user u,bidder b WHERE b.user_id = u.id AND username = '$username'";
 
   $results = mysqli_query($con,$user);
 
@@ -14,11 +14,11 @@
   }
   
  
-  if(mysqli_query($con,"DELETE FROM `bidding` WHERE `bidder_id` = $id ") or die(mysqli_error($con)))
+  if(mysqli_query($con,"DELETE FROM `bid` WHERE `bidder_id` = $id ") or die(mysqli_error($con)))
   {
      if( mysqli_query($con,"DELETE FROM `bidder` WHERE `id` = $id") or die(mysqli_error($con)))
      { 
-         if(mysqli_query($con,"DELETE FROM `users` WHERE `username` = '$username' ") or die(mysqli_error($con)))
+         if(mysqli_query($con,"DELETE FROM `user` WHERE `username` = '$username' ") or die(mysqli_error($con)))
          {
             header("location:users.php");;
          }

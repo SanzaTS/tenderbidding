@@ -263,7 +263,7 @@ $username = $_SESSION['username'];
       $id = $_GET['id'];
  
          
-       $sql = "SELECT b.name,b.surname,b.company,t.amount FROM bidder b,bidding t WHERE b.id = t.bidder_id AND t.tender_no = '$id' ORDER BY t.amount DESC LIMIT 1";
+       $sql = "SELECT b.name,b.surname,b.company,t.amount FROM bidder b,bid t WHERE b.id = t.bidder_id AND t.tender_no = '$id' ORDER BY t.amount DESC LIMIT 1";
  
        $res = mysqli_query($con,$sql) or die(mysqli_error($con)) ;
  

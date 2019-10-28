@@ -51,7 +51,7 @@
                                                        { 
                                                            if(strlen($phone) == 10)
                                                            {
-                                                            $check1 = mysqli_query($con,"SELECT * FROM users WHERE username = '$username'");
+                                                            $check1 = mysqli_query($con,"SELECT * FROM user WHERE username = '$username'");
                                                             if(mysqli_num_rows($check1)== 0)
                                                             {
                                                                 $check2 = mysqli_query($con,"SELECT * FROM bidder WHERE email = '$email'");
@@ -61,7 +61,7 @@
                                                                     { 
                                                                         $date = date("Y-m-d");
  
-                                                                    $sql1 = "INSERT INTO users(username,password,role,createdAt,Active) VALUES('$username','$password1','Admin','$date','online')";
+                                                                    $sql1 = "INSERT INTO user(username,password,role,createdAt,Active) VALUES('$username','$password1','Admin','$date','online')";
                                                                     if(mysqli_query($con,$sql1) or die(mysqli_error($con)))
                                                                     {
                                                                         $id = mysqli_insert_id($con);
@@ -93,7 +93,7 @@
                                                                     {
                                                                         $date = date("Y-m-d");
  
-                                                                    $sql1 = "INSERT INTO users(username,password,role,createdAt,Active) VALUES('$username','$password1','Bidder','$date','online')";
+                                                                    $sql1 = "INSERT INTO user(username,password,role,createdAt,Active) VALUES('$username','$password1','Bidder','$date','online')";
                                                                     if(mysqli_query($con,$sql1) or die(mysqli_error($con)))
                                                                     {
                                                                         $id = mysqli_insert_id($con);

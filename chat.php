@@ -4,7 +4,7 @@ include("connection.php");
 
 $username = $_SESSION['username'];
 if(isset($_POST['save'])){
-    $statement = "SELECT b.id FROM users u,bidder b WHERE u.id = b.user_id AND u.username = '$username'";
+    $statement = "SELECT b.id FROM user u,bidder b WHERE u.id = b.user_id AND u.username = '$username'";
      
     $res = mysqli_query($con,$statement);
 
@@ -20,7 +20,7 @@ if(isset($_POST['save'])){
    $date = date("y-m-d");
   $min = "";
 
-   $res1 = mysqli_query($con,"SELECT MAX(amount) as amount  FROM bidding WHERE tender_no = '$ref'");
+   $res1 = mysqli_query($con,"SELECT MAX(amount) as amount  FROM bid WHERE tender_no = '$ref'");
 
    while($row1 = mysqli_fetch_array($res1))
    {
@@ -45,7 +45,7 @@ if(isset($_POST['save'])){
       
     }
     else{
-       $biding = "UPDATE bidding SET amount = '$amount' WHERE tender_no = '$ref' AND bidder_id = $id";
+       $biding = "UPDATE bid SET amount = '$amount' WHERE tender_no = '$ref' AND bidder_id = $id";
       if(mysqli_query($con,$biding))
        {
          header("location:allbids.php");
@@ -254,7 +254,7 @@ if(isset($_POST['save'])){
                   <select  name="reciever">
                   <option>--Select Reciever</option>
                   <?php
-                       $query = "select * from users WHERE username <> '$username'";
+                       $query = "select * from user WHERE username <> '$username'";
                        $results = mysqli_query($con,$query);
                        while($row =mysqli_fetch_array($results))
                        {

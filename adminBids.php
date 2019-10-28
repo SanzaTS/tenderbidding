@@ -218,7 +218,7 @@ $username = $_SESSION['username'];
               $tender = $_GET['id'];
 
 
-            $table = "SELECT u.name,u.surname,u.company,b.amount,b.bid_date FROM bidder u,bidding b WHERE u.id = b.bidder_id AND b.tender_no = '$tender' ";
+            $table = "SELECT u.name,u.surname,u.company,b.amount,b.bid_date FROM bidder u,bid b WHERE u.id = b.bidder_id AND b.tender_no = '$tender' ";
                 
 
               
@@ -260,7 +260,7 @@ $username = $_SESSION['username'];
         
       </table>
       <?php 
-        $highest = "SELECT u.name,u.surname,MAX(b.amount) as Money FROM bidder u,bidding b WHERE u.id = b.bidder_id AND b.tender_no = '$tender' ";
+        $highest = "SELECT u.name,u.surname,MAX(b.amount) as Money FROM bidder u,bid b WHERE u.id = b.bidder_id AND b.tender_no = '$tender' ";
          $query = mysqli_query($con,$highest);
 
          while($fetch = mysqli_fetch_array($query))

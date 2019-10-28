@@ -203,7 +203,7 @@ $username = $_SESSION['username'];
         <?php
               $user = $_GET['id'];
 
-              $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date,b.amount,b.bid_date FROM bidding b,tender t,users u, bidder w WHERE u.id = w.user_id AND w.id = b.bidder_id AND t.tenderId = b.tender_no AND u.username = '$user'";
+              $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date,b.amount,b.bid_date FROM bidding b,tender t,user u, bidder w WHERE u.id = w.user_id AND w.id = b.bidder_id AND t.tenderId = b.tender_no AND u.username = '$user'";
               
               
               $output = mysqli_query($con,$table) or die(mysqli_error($con));

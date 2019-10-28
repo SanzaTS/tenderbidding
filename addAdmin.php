@@ -35,7 +35,7 @@ if(isset($_POST['save']))
                           { 
                              if(filter_var($email, FILTER_VALIDATE_EMAIL))
                              {
-                                  $ckUser = "SELECT * FROM users WHERE username = '$sysname'";
+                                  $ckUser = "SELECT * FROM user WHERE username = '$sysname'";
                                   $res1 = mysqli_query($con,$ckUser);
                                   $row = mysqli_num_rows($res1);
                                   if($row == 0)
@@ -46,7 +46,7 @@ if(isset($_POST['save']))
 
                                       if($row1 == 0)
                                       {
-                                            $sql = "INSERT INTO `users`(`username`, `password`, `role`, `createdAt`, `Active`) VALUES('$sysname','password','Admin','$date','offline')";
+                                            $sql = "INSERT INTO `user`(`username`, `password`, `role`, `createdAt`, `Active`) VALUES('$sysname','password','Admin','$date','offline')";
                                             if(mysqli_query($con,$sql) or die(mysqli_error($con)))
                                             {
                                               $id = mysqli_insert_id($con);

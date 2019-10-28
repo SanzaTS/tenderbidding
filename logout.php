@@ -5,7 +5,7 @@ include("connection.php");
 
 $username = $_SESSION['username'];
    // echo $username;
-    $sql = "UPDATE `users` SET `Active`='offline' WHERE `username` = '$username' ";
+    $sql = "UPDATE `user` SET `Active`='offline' WHERE `username` = '$username' ";
 
     if(mysqli_query($con,$sql))
     {

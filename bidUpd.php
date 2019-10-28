@@ -4,7 +4,7 @@ include("connection.php");
 
 $username = $_SESSION['username'];
 if(isset($_POST['save'])){
-    $statement = "SELECT b.id FROM users u,bidder b WHERE u.id = b.user_id AND u.username = '$username'";
+    $statement = "SELECT b.id FROM user u,bidder b WHERE u.id = b.user_id AND u.username = '$username'";
      
     $res = mysqli_query($con,$statement);
 
@@ -20,7 +20,7 @@ if(isset($_POST['save'])){
    $date = date("y-m-d");
   $min = "";
 
-   $res1 = mysqli_query($con,"SELECT MAX(amount) as amount  FROM bidding WHERE tender_no = '$ref'");
+   $res1 = mysqli_query($con,"SELECT MAX(amount) as amount  FROM bid WHERE tender_no = '$ref'");
 
    while($row1 = mysqli_fetch_array($res1))
    {
@@ -49,7 +49,7 @@ if(isset($_POST['save'])){
 
         if(is_numeric($amount))
         {
-          $biding = "UPDATE bidding SET amount = '$amount' WHERE tender_no = '$ref' AND bidder_id = $id";
+          $biding = "UPDATE bid SET amount = '$amount' WHERE tender_no = '$ref' AND bidder_id = $id";
           if(mysqli_query($con,$biding))
            {
              header("location:allbids.php");
@@ -272,7 +272,7 @@ if(isset($_POST['save'])){
   <!-- Card Header - Dropdown -->
   <?php 
       
-      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+      $query = " SELECT b.industry FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
        
       $id =  $_GET['id'];
         

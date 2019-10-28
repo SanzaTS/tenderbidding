@@ -25,7 +25,7 @@ $username = $_SESSION['username'];
 		
 		$queryCondition .= "AND b.bid_date BETWEEN '$fiy-$fim-$fid' AND '" . $post_at_todate . "'";
 	}
-  $query = " SELECT b.industry FROM users u,bidder b WHERE b.user_id = u.id AND u.username = '$username'";
+  $query = " SELECT b.industry FROM user u,bidder b WHERE b.user_id = u.id AND u.username = '$username'";
              
   $rs = mysqli_query($con,$query);
   while($ln = mysqli_fetch_array($rs)) 
@@ -36,7 +36,7 @@ $username = $_SESSION['username'];
 
   
   $table = "SELECT u.name,u.surname,u.company,b.bid_date,b.amount,b.status,t.tenderId,t.tender_title,t.short_description
-   FROM bidder u,bidding b,tender t
+   FROM bidder u,bid b,tender t
     WHERE u.id = b.bidder_id 
     AND t.tenderId = b.tender_no 
     AND b.status = 'Won' 

@@ -13,7 +13,7 @@ include("session.php");
 
     if(!empty($username) || !empty($password))
     {
-        $sql= "SELECT * FROM users WHERE username = '$username' AND password ='$password' ";
+        $sql= "SELECT * FROM user WHERE username = '$username' AND password ='$password' ";
 
         $res = mysqli_query($con,$sql);
 
@@ -35,7 +35,7 @@ include("session.php");
 
          
 
-         $get = "SELECT a.status FROM users u,admin a WHERE u.id = a.user_id AND u.username = '$username'";
+         $get = "SELECT a.status FROM user u,admin a WHERE u.id = a.user_id AND u.username = '$username'";
          $res = mysqli_query($con,$get);
 
          while($line = mysqli_fetch_array($res))
@@ -52,7 +52,7 @@ include("session.php");
          else
          {
             
-            mysqli_query($con,"UPDATE users SET Active = 'online' WHERE username = '$username' ");
+            mysqli_query($con,"UPDATE user SET Active = 'online' WHERE username = '$username' ");
             $_SESSION['username'] = $username;
             header("location:admin.php");
          }
@@ -62,7 +62,7 @@ include("session.php");
        }
        else{
         $_SESSION['username'] = $username;
-        mysqli_query($con,"UPDATE users SET Active = 'online' WHERE username = '$username' ");
+        mysqli_query($con,"UPDATE user SET Active = 'online' WHERE username = '$username' ");
         header("location:bidder.php");
           
        }

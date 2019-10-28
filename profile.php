@@ -48,7 +48,7 @@ if(isset($_POST['save'])){
                         
               }else{
                    //SQL statement to enter the items in the database
-                   $sql = "UPDATE bidder SET name ='$name' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                   $sql = "UPDATE bidder SET name ='$name' WHERE user_id=(SELECT id FROM user WHERE username = '$username')";
                   $res = mysqli_query($con,$sql);
                   
                   if (!$res) {
@@ -82,7 +82,7 @@ if(isset($_POST['save'])){
                         
                     }else{
                          //SQL statement to enter the items in the database
-                         $sql = "UPDATE bidder SET email ='$email' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                         $sql = "UPDATE bidder SET email ='$email' WHERE user_id=(SELECT id FROM user WHERE username = '$username')";
                         $res = mysqli_query($con,$sql);
                         
                         if (!$res) {
@@ -125,7 +125,7 @@ if(isset($_POST['save'])){
                                 if($third == "0"||$third == "1"||$third == "2" || $third == "3" || $third == "4" || $third == "6" ||$third == "8"|| $third == "9")
                                 { 
                                   //SQL statement to enter the items in the database
-                                     $sql = "UPDATE bidder SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM users WHERE username = '$username')";
+                                     $sql = "UPDATE bidder SET contact_no ='$contact_no' WHERE user_id=(SELECT id FROM user WHERE username = '$username')";
                                       $res = mysqli_query($con,$sql);
 
                                        if (!$res) {
@@ -322,7 +322,7 @@ if(isset($_POST['save'])){
   <!-- Card Header - Dropdown -->
   <?php 
       
-      $query = " SELECT b.name, b.surname, b.company, b.industry, b.email, b.contact_no FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+      $query = " SELECT b.name, b.surname, b.company, b.industry, b.email, b.contact_no FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
       $res = mysqli_query($con,$query);
       $row1 = mysqli_fetch_array($res);
 

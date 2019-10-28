@@ -28,7 +28,7 @@ if(isset($_POST['save']))
 
        $tender_id = "TBS/19-".substr($code,0,3);
 
-       $id = mysqli_query($con,"SELECT a.id FROM users u,admin a WHERE u.id = a.user_id AND u.username = 'Admin'");
+       $id = mysqli_query($con,"SELECT a.id FROM user u,admin a WHERE u.id = a.user_id AND u.username = 'Admin'");
 
        while($row = mysqli_fetch_array($id))
        {

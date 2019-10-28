@@ -35,7 +35,7 @@ echo "<th style=\"border:1px solid;\">Closing Date</th>";
                
 echo "</tr>";
 
-$query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+$query = " SELECT b.id FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
              
 $rs = mysqli_query($con,$query);
 while($ln = mysqli_fetch_array($rs)) 
@@ -44,7 +44,7 @@ while($ln = mysqli_fetch_array($rs))
 }
 
 
-$table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+$table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bid b
 WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat";
 
 
@@ -104,7 +104,7 @@ echo "<th style=\"border:1px solid;\">Closing Date</th>";
                   
 echo "</tr>";
 
-$query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+$query = " SELECT b.id FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
              
 $rs = mysqli_query($con,$query);
 while($ln = mysqli_fetch_array($rs)) 
@@ -113,7 +113,7 @@ while($ln = mysqli_fetch_array($rs))
 }
 
 
-$table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+$table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bid b
 WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat";
 
 
@@ -214,7 +214,7 @@ if(isset($_POST['pdf']))
       $pdf->Ln();
         
                   
-      $query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+      $query = " SELECT b.id FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
              
 $rs = mysqli_query($con,$query);
 while($ln = mysqli_fetch_array($rs)) 
@@ -223,7 +223,7 @@ while($ln = mysqli_fetch_array($rs))
 }
 
 
-$table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+$table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bid b
 WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat";
 
 
@@ -497,7 +497,7 @@ while($row =mysqli_fetch_array($output))
         <tbody>
           <?php
              
-             $query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+             $query = " SELECT b.id FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
                           
              $rs = mysqli_query($con,$query);
              while($ln = mysqli_fetch_array($rs)) 
@@ -510,7 +510,7 @@ while($row =mysqli_fetch_array($output))
 
                  $keyword = $_POST['query'];
 
-                  $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+                  $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bid b
                   WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat
                   AND t.tender_title LIKE '%$keyword%'
                   OR t.tenderId  = '$keyword' LIMIT 1 ";
@@ -543,7 +543,7 @@ while($row =mysqli_fetch_array($output))
             else
             {
                 //default data
-                $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bidding b
+                $table = "SELECT t.tenderId,t.tender_title,t.short_description,t.due_date FROM tender t,bid b
                 WHERE b.tender_no = t.tenderId AND  b.bidder_id = $cat
                  AND DATEDIFF(NOW(),t.due_date) < 0";
                 

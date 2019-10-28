@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2019 at 04:41 PM
+-- Generation Time: Oct 28, 2019 at 10:37 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -53,6 +53,34 @@ INSERT INTO `admin` (`id`, `name`, `surname`, `id_num`, `gender`, `email`, `cont
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bid`
+--
+
+CREATE TABLE `bid` (
+  `bid_no` int(10) NOT NULL,
+  `bid_date` varchar(10) NOT NULL,
+  `amount` double(10,2) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `bidder_id` int(10) NOT NULL,
+  `tender_no` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bid`
+--
+
+INSERT INTO `bid` (`bid_no`, `bid_date`, `amount`, `status`, `bidder_id`, `tender_no`) VALUES
+(6, '2019-09-20', 200000.00, 'Bidded', 6, 'TBS/19-NLQ'),
+(7, '2019-09-20', 250000.00, 'Won', 6, 'TBS/19-XHD'),
+(8, '2019-09-20', 120000.00, 'Won', 7, 'TBS/19-JTY'),
+(9, '2019-09-24', 220000.00, 'Bidded', 5, 'TBS/19-NLQ'),
+(12, '2019-09-25', 1200000.00, 'Bidded', 6, 'TBS/19-WNJ'),
+(13, '2019-09-25', 1400000.00, 'Won', 5, 'TBS/19-WNJ'),
+(15, '2019-09-30', 200000.00, 'Bidded', 5, 'TBS/19-XHD');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bidder`
 --
 
@@ -82,34 +110,6 @@ INSERT INTO `bidder` (`id`, `name`, `surname`, `id_num`, `gender`, `company`, `i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bidding`
---
-
-CREATE TABLE `bidding` (
-  `bid_no` int(10) NOT NULL,
-  `bid_date` varchar(10) NOT NULL,
-  `amount` double(10,2) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `bidder_id` int(10) NOT NULL,
-  `tender_no` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bidding`
---
-
-INSERT INTO `bidding` (`bid_no`, `bid_date`, `amount`, `status`, `bidder_id`, `tender_no`) VALUES
-(6, '2019-09-20', 200000.00, 'Bidded', 6, 'TBS/19-NLQ'),
-(7, '2019-09-20', 250000.00, 'Won', 6, 'TBS/19-XHD'),
-(8, '2019-09-20', 120000.00, 'Won', 7, 'TBS/19-JTY'),
-(9, '2019-09-24', 210000.00, 'Bidded', 5, 'TBS/19-NLQ'),
-(12, '2019-09-25', 1200000.00, 'Bidded', 6, 'TBS/19-WNJ'),
-(13, '2019-09-25', 1400000.00, 'Won', 5, 'TBS/19-WNJ'),
-(15, '2019-09-30', 200000.00, 'Bidded', 5, 'TBS/19-XHD');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `chat`
 --
 
@@ -129,9 +129,9 @@ CREATE TABLE `chat` (
 INSERT INTO `chat` (`mid`, `sender`, `reciever`, `Msg`, `date`, `time`) VALUES
 (1, 'Admin', 'SanzaTs', 'Hey man are you good', '28/09/2019', '01:23:43'),
 (2, 'Sbudda', 'Admin', 'Sho', '28/09/2019', '02:45:44'),
-(98, 'Admin', 'BusiMc', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '26/10/2019', '04:11:05'),
-(99, 'Admin', 'SanzaTs', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '26/10/2019', '04:11:05'),
-(100, 'Admin', 'Sbudda', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '26/10/2019', '04:11:05');
+(220, 'Admin', 'BusiMc', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '28/10/2019', '08:59:44'),
+(221, 'Admin', 'SanzaTs', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '28/10/2019', '08:59:45'),
+(222, 'Admin', 'Sbudda', 'Cogratulation You have just been awarded a tender,<a href=\" bidstats.php\">Clic here to check the awarde bids</a>', '28/10/2019', '08:59:45');
 
 -- --------------------------------------------------------
 
@@ -158,6 +158,7 @@ CREATE TABLE `tender` (
 INSERT INTO `tender` (`tenderId`, `tender_title`, `short_description`, `full_description`, `category`, `due_date`, `min_budget`, `max_budget`, `admin_id`) VALUES
 ('TBS/19-JAI', 'Tourism', 'Provide B&B', 'The tender is to provide  tourist with B&B ', 'Hospitality', '2019-10-01', 100000.00, 4000000.00, 1),
 ('TBS/19-JTY', 'HEALTH Supplier', 'Supply Hospital with medi', 'The bid is to supply hospital across Gauteng forthe next 2 years', 'Health', '2019-10-24', 20000.00, 4000000.00, 1),
+('TBS/19-LCO', '', '', '', '---Select your business type---', '', 0.00, 0.00, 1),
 ('TBS/19-LUB', 'RDP Construction', 'Build RDP Houses', 'Gauteng government is looking for constr.uction company who will  build RDP Houses at Soshsanguve ', 'Construction', '2019-10-18', 200000.00, 10000000.00, 1),
 ('TBS/19-NLQ', 'IT Supply ', 'Supply IT Gadget', 'ABSA is looking for company to supply IT Equipment for our new branch and other upcoming branch for the next 5 years.If interested please place your bid and the highest will be awarded', 'Infomation Technology', '2019-10-31', 100000.00, 2000000.00, 1),
 ('TBS/19-SQK', 'IT Migration', 'Migrating OLD with New', 'We need IT consultant who are going to offer us migration from our legacy system to  ERP Systems  and maintain it during the pilot phase till phase out', 'Infomation Technology', '2019-10-29', 1000000.00, 4000000.00, 1),
@@ -169,10 +170,10 @@ INSERT INTO `tender` (`tenderId`, `tender_title`, `short_description`, `full_des
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `id` int(10) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(20) NOT NULL,
@@ -182,12 +183,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `role`, `createdAt`, `Active`) VALUES
+INSERT INTO `user` (`id`, `username`, `password`, `role`, `createdAt`, `Active`) VALUES
 (4, 'Admin', 'password', 'Admin', '2019-08-19', 'online'),
-(9, 'SanzaTs', 'password', 'Bidder', '2019-08-22', 'offline'),
+(9, 'SanzaTs', 'password', 'Bidder', '2019-08-22', 'online'),
 (10, 'Sbudda', 'password', 'Bidder', '2019-08-22', 'offline'),
 (11, 'BusiMc', 'password', 'Bidder', '2019-08-23', 'offlline'),
 (12, 'jetmi', 'password', 'Admin', '2019-09-28', 'offline'),
@@ -207,19 +208,19 @@ ALTER TABLE `admin`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `bid`
+--
+ALTER TABLE `bid`
+  ADD PRIMARY KEY (`bid_no`),
+  ADD KEY `bidder_id` (`bidder_id`),
+  ADD KEY `tender_no` (`tender_no`);
+
+--
 -- Indexes for table `bidder`
 --
 ALTER TABLE `bidder`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `bidding`
---
-ALTER TABLE `bidding`
-  ADD PRIMARY KEY (`bid_no`),
-  ADD KEY `bidder_id` (`bidder_id`),
-  ADD KEY `tender_no` (`tender_no`);
 
 --
 -- Indexes for table `chat`
@@ -235,9 +236,9 @@ ALTER TABLE `tender`
   ADD KEY `admin_id` (`admin_id`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `user`
 --
-ALTER TABLE `users`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -251,27 +252,27 @@ ALTER TABLE `admin`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `bid`
+--
+ALTER TABLE `bid`
+  MODIFY `bid_no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `bidder`
 --
 ALTER TABLE `bidder`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `bidding`
---
-ALTER TABLE `bidding`
-  MODIFY `bid_no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `users`
+ALTER TABLE `user`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
@@ -282,20 +283,20 @@ ALTER TABLE `users`
 -- Constraints for table `admin`
 --
 ALTER TABLE `admin`
-  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `bid`
+--
+ALTER TABLE `bid`
+  ADD CONSTRAINT `bid_ibfk_1` FOREIGN KEY (`bidder_id`) REFERENCES `bidder` (`id`),
+  ADD CONSTRAINT `bid_ibfk_2` FOREIGN KEY (`tender_no`) REFERENCES `tender` (`tenderId`);
 
 --
 -- Constraints for table `bidder`
 --
 ALTER TABLE `bidder`
-  ADD CONSTRAINT `bidder_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `bidding`
---
-ALTER TABLE `bidding`
-  ADD CONSTRAINT `bidding_ibfk_1` FOREIGN KEY (`bidder_id`) REFERENCES `bidder` (`id`),
-  ADD CONSTRAINT `bidding_ibfk_2` FOREIGN KEY (`tender_no`) REFERENCES `tender` (`tenderId`);
+  ADD CONSTRAINT `bidder_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `tender`

@@ -8,7 +8,7 @@ $username = $_SESSION['username'];
 
   $id = $_GET['id'];
 
-     $query = " SELECT b.id FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+     $query = " SELECT b.id FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
        
       $rs = mysqli_query($con,$query);
       while($ln = mysqli_fetch_array($rs))
@@ -16,7 +16,7 @@ $username = $_SESSION['username'];
         $uid = $ln['id'];
       }
       
-      $del = "DELETE FROM bidding WHERE bidder_id = $uid AND tender_no = '$id'";
+      $del = "DELETE FROM bid WHERE bidder_id = $uid AND tender_no = '$id'";
 
       if(mysqli_query($con,$del))
       {

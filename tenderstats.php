@@ -210,7 +210,7 @@ $username = $_SESSION['username'];
              
                $id =$_GET['id'];
 
-              $table = "SELECT u.name,u.surname,u.company,b.amount,b.bid_date FROM bidder u,bidding b 
+              $table = "SELECT u.name,u.surname,u.company,b.amount,b.bid_date FROM bidder u,bid b 
               WHERE b.bidder_id = u.id
                AND b.tender_no = '$id'";
                 

@@ -34,7 +34,7 @@ echo "<th style=\"border:1px solid;\">Status</th>";
 echo "<th style=\"border:1px solid;\">created At</th>";                 
 echo "</tr>";
 
-$sql = "SELECT u.*,b.* FROM users u ,bidder b WHERE u.id = b.user_id";
+$sql = "SELECT u.*,b.* FROM user u ,bidder b WHERE u.id = b.user_id";
 $results = mysqli_query($con,$sql);
 
 while($row = mysqli_fetch_array($results))
@@ -105,7 +105,7 @@ echo "<th style=\"border:1px solid;\">Status</th>";
 echo "<th style=\"border:1px solid;\">created At</th>";                   
 echo "</tr>";
 
-$sql = "SELECT u.*,b.* FROM users u ,bidder b WHERE u.id = b.user_id ";
+$sql = "SELECT u.*,b.* FROM user u ,bidder b WHERE u.id = b.user_id ";
 $results = mysqli_query($con,$sql);
 
 while($row = mysqli_fetch_array($results))
@@ -219,7 +219,7 @@ if(isset($_POST['pdf']))
       $pdf->Ln();
         
                   
-      $sql = "SELECT u.*,b.* FROM users u ,bidder b WHERE u.id = b.user_id";
+      $sql = "SELECT u.*,b.* FROM user u ,bidder b WHERE u.id = b.user_id";
       $results = mysqli_query($con,$sql);
 
       while($row = mysqli_fetch_array($results))
@@ -483,7 +483,7 @@ if(isset($_POST['pdf']))
         <?php
               
 
-              $table = "SELECT u.*,b.* FROM users u ,bidder b WHERE u.id = b.user_id";
+              $table = "SELECT u.*,b.* FROM user u ,bidder b WHERE u.id = b.user_id";
               
               
               $output = mysqli_query($con,$table) or die(mysqli_error($con));
@@ -561,7 +561,7 @@ if(isset($_POST['pdf']))
         <?php
               
 
-              $table = "SELECT b.name,b.surname,COUNT(a.bidder_id) as Bids FROM bidder b,bidding a WHERE b.id = a.bidder_id GROUP by b.name,b.surname";
+              $table = "SELECT b.name,b.surname,COUNT(a.bidder_id) as Bids FROM bidder b,bid a WHERE b.id = a.bidder_id GROUP by b.name,b.surname";
               
               
               $output = mysqli_query($con,$table) or die(mysqli_error($con));

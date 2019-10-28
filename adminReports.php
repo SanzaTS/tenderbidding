@@ -425,7 +425,7 @@ if(isset($_POST['pdf']))
         <div class="row no-gutters align-items-center">
            <?php 
 
-            $bids = "SELECT COUNT(*) as Bids FROM bidding ";
+            $bids = "SELECT COUNT(*) as Bids FROM bid ";
             $results1 = mysqli_query($con,$bids);
             while($row = mysqli_fetch_array($results1))
             {
@@ -510,7 +510,7 @@ if(isset($_POST['pdf']))
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
           <?php 
-            $query = "SELECT COUNT(*) as People FROM users ";
+            $query = "SELECT COUNT(*) as People FROM user ";
             $results4 = mysqli_query($con,$query);
 
             while($row3 = mysqli_fetch_array($results4))

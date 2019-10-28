@@ -4,7 +4,7 @@ include("connection.php");
 
 $username = $_SESSION['username'];
 if(isset($_POST['save'])){
-    $statement = "SELECT b.id FROM users u,bidder b WHERE u.id = b.user_id   AND u.username = '$username'";
+    $statement = "SELECT b.id FROM user u,bidder b WHERE u.id = b.user_id   AND u.username = '$username'";
      
     $res = mysqli_query($con,$statement);
 
@@ -22,7 +22,7 @@ if(isset($_POST['save'])){
 
     if(is_numeric($amount))
     { 
-      $val = "  SELECT t.*,b.* FROM tender t,bidding b 
+      $val = "  SELECT t.*,b.* FROM tender t,bid b 
       WHERE t.tenderId = b.tender_no 
       AND t.tenderId = '$ref'
       AND b.bidder_id = $id";
@@ -44,7 +44,7 @@ if(isset($_POST['save'])){
              }
              if($amount >= $min)
              {
-              $biding = "INSERT INTO `bidding`(`bid_date`, `amount`, `status`,`bidder_id`, `tender_no`) VALUES('$date','$amount','Bidded',$id,'$ref')";
+              $biding = "INSERT INTO `bid`(`bid_date`, `amount`, `status`,`bidder_id`, `tender_no`) VALUES('$date','$amount','Bidded',$id,'$ref')";
               if(mysqli_query($con,$biding))
               {
                   header("location:allbids.php");
@@ -294,7 +294,7 @@ if(isset($_POST['save'])){
   <!-- Card Header - Dropdown -->
   <?php 
       
-      $query = " SELECT b.industry FROM bidder b,users u WHERE b.user_id = u.id AND u.username = '$username'";
+      $query = " SELECT b.industry FROM bidder b,user u WHERE b.user_id = u.id AND u.username = '$username'";
        
       $id =  $_GET['id'];
         
