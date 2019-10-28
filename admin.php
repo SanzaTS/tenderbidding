@@ -19,6 +19,9 @@ if(isset($_POST['save']))
 
     if(!empty($title)||!empty($description)||!empty($description2)||empty($catergory)||empty($date)||!empty($minimum)||!empty($maximum))
     {
+		if($date >  date("Y-m-d"))
+		{
+			
        $str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
        $code = str_shuffle($str);
@@ -43,6 +46,11 @@ if(isset($_POST['save']))
        else{
          $error = "Something went wrong";
        }
+	  }
+	  else
+	  {
+		  $error = "You can not select the past date";
+	  }
          
     }
     else{
